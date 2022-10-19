@@ -8,12 +8,29 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            d
+            <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Background ="Gray" Grid.Column="1"  Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Start Window"/>
+                <Button Content="Game Window"/>
+            </StackPanel>
+        </DockPanel>
+
+        
+        <ContentControl Grid.Row ="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" 
+                        Content="{Binding}"/>
     </Grid>
 </Window>
