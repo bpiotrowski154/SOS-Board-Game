@@ -4,33 +4,39 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SOS"
+        xmlns:viewmodels="clr-namespace:SOS.ViewModels"
+        xmlns:views="clr-namespace:SOS.Views" 
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <DataTemplate x:Name="startViewTemplate" DataType="{x:Type viewmodels:StartViewModel}">
+            <views:StartView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="gameViewTemplate" DataType="{x:Type viewmodels:GameViewModel}">
+            <views:GameView DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <DockPanel Background ="Gray" Grid.Column="1"  Grid.Row="0">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Start Window"/>
-                <Button Content="Game Window"/>
+                <Button Content="Start View" Click="StartView_Clicked"/>
+                <Button Content="Game View" Click="GameView_Clicked"/>
             </StackPanel>
         </DockPanel>
 
         
-        <ContentControl Grid.Row ="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" 
-                        Content="{Binding}"/>
+        <ContentControl Grid.Column="1" Grid.Row ="1" Content="{Binding}"/>
     </Grid>
 </Window>

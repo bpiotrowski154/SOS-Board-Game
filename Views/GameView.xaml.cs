@@ -1,5 +1,4 @@
-﻿using SOS.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,26 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SOS
+namespace SOS.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GameView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GameView : UserControl
     {
-        public MainWindow()
+        public GameView()
         {
             InitializeComponent();
-        }
-
-        private void StartView_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new StartViewModel();
-        }
-
-        private void GameView_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new GameViewModel();
         }
     }
 }
