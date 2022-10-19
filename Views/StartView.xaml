@@ -9,27 +9,31 @@
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="400"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Column="1" Grid.Row="1" Text="SOS" FontFamily="Calibri" FontSize="56" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         
-        <TextBlock Grid.Column="1" Grid.Row="2" Text="Game Type" FontFamily="Calibri" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <RadioButton Content="Simple Game" FontFamily="Calibri" FontSize="18" Margin="0,5,0,5"/>
-            <RadioButton Content="General Game" FontFamily="Calibri" FontSize="18" Margin="0,5,0,5"/>
+            <TextBlock Text="Game Type" FontFamily="Calibri" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,5"/>
+            <RadioButton Content="Simple Game" FontFamily="Calibri" FontSize="18" HorizontalAlignment="Left" Margin="0,5,0,5"/>
+            <RadioButton Content="General Game" FontFamily="Calibri" FontSize="18" HorizontalAlignment="Left" Margin="0,5,0,5"/>
         </StackPanel>
 
-        <TextBlock Grid.Column="1" Grid.Row="3" Text="Board Size" FontFamily="Calibri" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Slider Grid.Column="1" Grid.Row="3" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Maximum="6" Minimum="3" Value="3" VerticalAlignment="Bottom"/>
-
+        <StackPanel Grid.Column="1" Grid.Row="3" Margin="10,0,10,0" VerticalAlignment="Center">
+            <TextBlock Text="Board Size" FontFamily="Calibri" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,5"/>
+            <Slider IsSnapToTickEnabled="True" TickPlacement="BottomRight" Maximum="6" Minimum="3" Value="3"/>
+            <TextBlock Text=" 3                                           4                                           5                                           6"
+                       FontFamily="Calibri"/>
+        </StackPanel>
+        
     </Grid>
 </UserControl>
