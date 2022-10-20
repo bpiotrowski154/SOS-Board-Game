@@ -4,20 +4,61 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="670" Width="1024">
+
+    <Window.Resources>
+        <!--<Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <EventSetter/>
+        </Style>-->
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="31"/>
+            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="31"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="500"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
+
+
+        <TextBlock Text="SOS" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                   FontFamily="Calibri" FontSize="36" FontWeight="Bold"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <RadioButton Content="Simple Game"/>
+            <RadioButton Content="General Game"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="5" Grid.Row="1" Grid.RowSpan="2">
+            <TextBlock Text="Board Size" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Calibri" FontSize="14"/>
+            <Slider Maximum="6" Minimum="3" Value="3" TickPlacement="BottomRight" FontFamily="Calibri" IsSnapToTickEnabled="True"/>
+            <TextBlock Text="3                      4                     5                     6" 
+                       FontFamily="Calibri"/>
+        </StackPanel>
+       
+        
+
+
     </Grid>    
     
     
