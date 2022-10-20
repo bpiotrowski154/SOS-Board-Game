@@ -7,12 +7,11 @@
         Title="MainWindow" Height="670" Width="1024">
 
     <Window.Resources>
-        <!--<Style TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Button}">
             <Setter Property="Margin" Value="3"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="32"/>
             <Setter Property="FontFamily" Value="Calibri"/>
-            <EventSetter/>
-        </Style>-->
+        </Style>
         <Style TargetType="{x:Type RadioButton}">
             <Setter Property="Margin" Value="3"/>
             <Setter Property="FontSize" Value="24"/>
@@ -42,21 +41,39 @@
 
 
         <TextBlock Text="SOS" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                   FontFamily="Calibri" FontSize="36" FontWeight="Bold"/>
+                   FontFamily="Calibri" FontSize="48" FontWeight="Bold"/>
 
         <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <RadioButton Content="Simple Game"/>
+            <RadioButton Content="Simple Game" IsChecked="True"/>
             <RadioButton Content="General Game"/>
         </StackPanel>
 
         <StackPanel Grid.Column="5" Grid.Row="1" Grid.RowSpan="2">
             <TextBlock Text="Board Size" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Calibri" FontSize="14"/>
-            <Slider Maximum="6" Minimum="3" Value="3" TickPlacement="BottomRight" FontFamily="Calibri" IsSnapToTickEnabled="True"/>
+            <Slider x:Name="boardSize" Maximum="6" Minimum="3" Value="3" TickPlacement="BottomRight" FontFamily="Calibri" IsSnapToTickEnabled="True"/>
             <TextBlock Text="3                      4                     5                     6" 
                        FontFamily="Calibri"/>
         </StackPanel>
-       
-        
+
+        <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="BLUE" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       FontFamily="Calibri" FontSize="36" Foreground="#FF0D80FF" FontWeight="Bold"/>
+            <RadioButton Content="S" HorizontalAlignment="Center" FontSize="36" IsChecked="True" Foreground="#FF0D80FF"/>
+            <RadioButton Content="O" HorizontalAlignment="Center" FontSize="36" Foreground="#FF0D80FF"/>
+        </StackPanel>
+
+        <Grid x:Name="gameBoardGrid" Grid.Column="3" Grid.Row="3" Background="Black"/>
+
+
+
+        <StackPanel Grid.Column="5" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="RED" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       FontFamily="Calibri" FontSize="24" Foreground="Red" FontWeight="Bold"/>
+            <RadioButton Content="S" HorizontalAlignment="Center" FontSize="36" IsChecked="True" Foreground="Red"/>
+            <RadioButton Content="O" HorizontalAlignment="Center" FontSize="36" Foreground="Red"/>
+        </StackPanel>
+
+        <Button Content="New Game" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Click="newGameBtn_Clicked"/>
 
 
     </Grid>    

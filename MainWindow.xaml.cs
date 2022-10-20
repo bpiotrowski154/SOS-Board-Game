@@ -24,5 +24,39 @@ namespace SOS
         {
             InitializeComponent();
         }
+        
+        GameLogic _gameLogic = new GameLogic();
+
+
+        private void newGameBtn_Clicked(object sender, RoutedEventArgs e)
+        {
+            generateNewGameBoard();
+            _gameLogic=new GameLogic();
+        }
+
+        private void generateNewGameBoard()
+        {
+            gameBoardGrid.Children.Clear();
+            gameBoardGrid.ColumnDefinitions.Clear();
+            gameBoardGrid.RowDefinitions.Clear();
+            
+            for(int i = 0; i < boardSize.Value; i++)
+            {
+                ColumnDefinition column = new ColumnDefinition();
+                RowDefinition row = new RowDefinition();
+                gameBoardGrid.ColumnDefinitions.Add(column);
+                gameBoardGrid.RowDefinitions.Add(row);
+            }
+            for(int i = 0; i < boardSize.Value; i++)
+            {
+                for (int j = 0; j < boardSize.Value; j++)
+                {
+                    Button button = new Button();
+                    button.SetValue(Grid.ColumnProperty, i);
+                    button.SetValue(Grid.RowProperty, j);
+                    gameBoardGrid.Children.Add(button);
+                }
+            }
+        }
     }
 }
