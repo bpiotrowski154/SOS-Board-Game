@@ -11,6 +11,7 @@
             <Setter Property="Margin" Value="3"/>
             <Setter Property="FontSize" Value="32"/>
             <Setter Property="FontFamily" Value="Calibri"/>
+            <EventSetter Event="Click" Handler="PlayerClicksCell"/>
         </Style>
         <Style TargetType="{x:Type RadioButton}">
             <Setter Property="Margin" Value="3"/>
@@ -44,7 +45,7 @@
                    FontFamily="Calibri" FontSize="48" FontWeight="Bold"/>
 
         <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <RadioButton Content="Simple Game" IsChecked="True"/>
+            <RadioButton x:Name="simpleGameBtn" Content="Simple Game" IsChecked="True"/>
             <RadioButton Content="General Game"/>
         </StackPanel>
 
@@ -58,8 +59,8 @@
         <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="BLUE" HorizontalAlignment="Center" VerticalAlignment="Center" 
                        FontFamily="Calibri" FontSize="36" Foreground="#FF0D80FF" FontWeight="Bold"/>
-            <RadioButton Content="S" HorizontalAlignment="Center" FontSize="36" IsChecked="True" Foreground="#FF0D80FF"/>
-            <RadioButton Content="O" HorizontalAlignment="Center" FontSize="36" Foreground="#FF0D80FF"/>
+            <RadioButton x:Name="blueSBtn" Content="S" HorizontalAlignment="Center" FontSize="36" IsChecked="True" Foreground="#FF0D80FF" Checked="setBluePlayerPlacementType"/>
+            <RadioButton Content="O" HorizontalAlignment="Center" FontSize="36" Foreground="#FF0D80FF" Checked="setBluePlayerPlacementType"/>
         </StackPanel>
 
         <Grid x:Name="gameBoardGrid" Grid.Column="3" Grid.Row="3" Background="Black"/>
@@ -69,8 +70,8 @@
         <StackPanel Grid.Column="5" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="RED" HorizontalAlignment="Center" VerticalAlignment="Center" 
                        FontFamily="Calibri" FontSize="24" Foreground="Red" FontWeight="Bold"/>
-            <RadioButton Content="S" HorizontalAlignment="Center" FontSize="36" IsChecked="True" Foreground="Red"/>
-            <RadioButton Content="O" HorizontalAlignment="Center" FontSize="36" Foreground="Red"/>
+            <RadioButton x:Name="redSBtn" Content="S" HorizontalAlignment="Center" FontSize="36" IsChecked="True" Foreground="Red" Checked="setRedPlayerPlacementType"/>
+            <RadioButton Content="O" HorizontalAlignment="Center" FontSize="36" Foreground="Red" Checked="setRedPlayerPlacementType"/>
         </StackPanel>
 
         <Button Content="New Game" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Click="newGameBtn_Clicked"/>
