@@ -1,5 +1,4 @@
-﻿using SOS.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,16 +23,6 @@ namespace SOS
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void StartView_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new StartViewModel();
-        }
-
-        private void GameView_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new GameViewModel();
         }
     }
 }
