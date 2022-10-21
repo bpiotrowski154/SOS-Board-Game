@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -51,6 +52,7 @@ namespace SOS
             }
 
             _gameLogic.SetNextPlayer();
+            updatePlayerturnDisplay();
             
         }
 
@@ -61,6 +63,8 @@ namespace SOS
             _gameLogic=new GameLogic();
             _gameLogic.updateBoardVar((int)boardSize.Value);
             _gameLogic.updateGameMode(getGameMode());
+            updateGameModeDisplay();
+            updatePlayerturnDisplay();
         }
 
         //Generates a new game board by removing all of the elements of the current
@@ -103,12 +107,53 @@ namespace SOS
             }
         }
 
+
+        public string gameMode
+        {
+            get { return (string)GetValue(gameModeProperty); }
+            set { SetValue(gameModeProperty, value); }
+        }
+        public static readonly DependencyProperty gameModeProperty = DependencyProperty.Register("gameMode", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
+
+        public string playerTurn
+        {
+            get { return (string)GetValue(playerTurnProperty); }
+            set { SetValue(playerTurnProperty, value); }
+        }
+        public static readonly DependencyProperty playerTurnProperty = DependencyProperty.Register("playerTurn", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
+
+
+        private void updateGameModeDisplay()
+        {
+            if (simpleGameBtn.IsChecked == true)
+            {
+                gameMode = "Current Game Mode: Simple";
+            }
+            else
+            {
+                gameMode = "Current Game Mode: General";
+            }
+        }
+
+        private void updatePlayerturnDisplay()
+        {
+            if (_gameLogic.CurrentPlayer == "RED")
+                playerTurn = "Current Turn: Red Player";
+            else
+                playerTurn = "Current Turn: Blue Player";
+        }
+
         private string getGameMode()
         {
             if (simpleGameBtn.IsChecked == true)
+            {
                 return "SIMPLE";
+            }
             else
+            {
                 return "GENERAL";
+            }
+                
         }
 
         private void setBluePlayerPlacementType(object sender, RoutedEventArgs e)

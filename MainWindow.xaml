@@ -76,6 +76,12 @@
 
         <Button Content="New Game" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Click="newGameBtn_Clicked"/>
 
+        <StackPanel Grid.Column="3" Grid.Row="5" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <TextBlock FontSize="18" FontFamily="Calibri" 
+                       Text="{Binding gameMode,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+            <TextBlock FontSize="18" FontFamily="Calibri" 
+                       Text="{Binding playerTurn,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+        </StackPanel>
 
     </Grid>    
     
