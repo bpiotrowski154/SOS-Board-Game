@@ -17,11 +17,13 @@ namespace GameLogicTests
 
             gameLogic.makeMove("S", initialPlayer, position1);
 
-            CellData expected = new CellData("S", initialPlayer);
-            CellData actual = gameLogic.Board[position1.x, position1.y];
+            CellData expectedCellData = new CellData("S", initialPlayer);
+            CellData actualCellData = gameLogic.Board[position1.x, position1.y];
+            string expectedPlayer = "RED";
+            string actualPlayer = gameLogic.CurrentPlayer;
 
-            Assert.AreEqual(expected, actual);
-
+            Assert.AreEqual(expectedCellData, actualCellData);
+            Assert.AreEqual(expectedPlayer, actualPlayer);
 
         }
 
@@ -38,12 +40,15 @@ namespace GameLogicTests
             gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
             gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
 
-            CellData expected = new CellData("S", gameLogic.CurrentPlayer);
-            CellData actual1 = gameLogic.Board[position1.x, position1.y];
-            CellData actual2 = gameLogic.Board[position2.x, position2.y];
+            CellData expectedCellData = new CellData("S", gameLogic.CurrentPlayer);
+            CellData actualCellData1 = gameLogic.Board[position1.x, position1.y];
+            CellData actualCellData2 = gameLogic.Board[position2.x, position2.y];
+            string expectedPlayer = "BLUE";
+            string actualPlayer = gameLogic.CurrentPlayer;
 
-            Assert.AreNotEqual(expected, actual1);
-            Assert.AreNotEqual(expected, actual2);
+            Assert.AreNotEqual(expectedCellData, actualCellData1);
+            Assert.AreNotEqual(expectedCellData, actualCellData2);
+            Assert.AreEqual(expectedPlayer, actualPlayer);
             
         }
         [TestMethod]
@@ -59,12 +64,15 @@ namespace GameLogicTests
             gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
             gameLogic.makeMove("O", gameLogic.CurrentPlayer, position2);
 
-            CellData expected = new CellData("O", gameLogic.CurrentPlayer);
-            CellData actual1 = gameLogic.Board[position1.x, position1.y];
-            CellData actual2 = gameLogic.Board[position2.x, position2.y];
+            CellData expectedCellData = new CellData("O", gameLogic.CurrentPlayer);
+            CellData actualCellData1 = gameLogic.Board[position1.x, position1.y];
+            CellData actualCellData2 = gameLogic.Board[position2.x, position2.y];
+            string expectedPlayer = "BLUE";
+            string actualPlayer = gameLogic.CurrentPlayer;
 
-            Assert.AreNotEqual(expected, actual1);
-            Assert.AreNotEqual(expected, actual2);
+            Assert.AreNotEqual(expectedCellData, actualCellData1);
+            Assert.AreNotEqual(expectedCellData, actualCellData2);
+            Assert.AreEqual(expectedPlayer, actualPlayer);
         }
         [TestMethod]
         public void ValidSOrOPlacement_GeneralGame()
@@ -78,10 +86,13 @@ namespace GameLogicTests
 
             gameLogic.makeMove("S", initialPlayer, position1);
 
-            CellData expected = new CellData("S", initialPlayer);
+            CellData expectedCellData = new CellData("S", initialPlayer);
             CellData actual = gameLogic.Board[position1.x, position1.y];
+            string expectedPlayer = "RED";
+            string actualPlayer = gameLogic.CurrentPlayer;
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expectedCellData, actual);
+            Assert.AreEqual(expectedPlayer, actualPlayer);
         }
 
         [TestMethod]
@@ -97,12 +108,16 @@ namespace GameLogicTests
             gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
             gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
 
-            CellData expected = new CellData("S", gameLogic.CurrentPlayer);
-            CellData actual1 = gameLogic.Board[position1.x, position1.y];
-            CellData actual2 = gameLogic.Board[position2.x, position2.y];
+            CellData expectedCellData = new CellData("S", gameLogic.CurrentPlayer);
+            CellData actualCellData1 = gameLogic.Board[position1.x, position1.y];
+            CellData actualCellData2 = gameLogic.Board[position2.x, position2.y];
+            string expectedPlayer = "BLUE";
+            string actualPlayer = gameLogic.CurrentPlayer;
 
-            Assert.AreNotEqual(expected, actual1);
-            Assert.AreNotEqual(expected, actual2);
+
+            Assert.AreNotEqual(expectedCellData, actualCellData1);
+            Assert.AreNotEqual(expectedCellData, actualCellData2);
+            Assert.AreEqual(expectedPlayer, actualPlayer);
         }
         [TestMethod]
         public void InvalidOPlacement_GeneralGame()
@@ -117,12 +132,15 @@ namespace GameLogicTests
             gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
             gameLogic.makeMove("O", gameLogic.CurrentPlayer, position2);
 
-            CellData expected = new CellData("O", gameLogic.CurrentPlayer);
-            CellData actual1 = gameLogic.Board[position1.x, position1.y];
-            CellData actual2 = gameLogic.Board[position2.x, position2.y];
+            CellData expectedCellData = new CellData("O", gameLogic.CurrentPlayer);
+            CellData actualCellData1 = gameLogic.Board[position1.x, position1.y];
+            CellData actualCellData2 = gameLogic.Board[position2.x, position2.y];
+            string expectedPlayer = "BLUE";
+            string actualPlayer = gameLogic.CurrentPlayer;
 
-            Assert.AreNotEqual(expected, actual1);
-            Assert.AreNotEqual(expected, actual2);
+            Assert.AreNotEqual(expectedCellData, actualCellData1);
+            Assert.AreNotEqual(expectedCellData, actualCellData2);
+            Assert.AreEqual(expectedPlayer, actualPlayer);
         }
     }
 }
