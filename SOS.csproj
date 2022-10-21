@@ -7,4 +7,11 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="GameLogicTests\**" />
+    <EmbeddedResource Remove="GameLogicTests\**" />
+    <None Remove="GameLogicTests\**" />
+    <Page Remove="GameLogicTests\**" />
+  </ItemGroup>
+
 </Project>

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOS", "SOS.csproj", "{6534F9DC-1A4F-40AD-B114-6A9E759C6C29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOS", "SOS.csproj", "{6534F9DC-1A4F-40AD-B114-6A9E759C6C29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLogicTests", "GameLogicTests\GameLogicTests.csproj", "{C53830C9-BB37-49BF-A560-64330A3EE7E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6534F9DC-1A4F-40AD-B114-6A9E759C6C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6534F9DC-1A4F-40AD-B114-6A9E759C6C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6534F9DC-1A4F-40AD-B114-6A9E759C6C29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C53830C9-BB37-49BF-A560-64330A3EE7E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C53830C9-BB37-49BF-A560-64330A3EE7E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C53830C9-BB37-49BF-A560-64330A3EE7E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C53830C9-BB37-49BF-A560-64330A3EE7E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

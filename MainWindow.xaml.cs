@@ -27,9 +27,6 @@ namespace SOS
         {
             InitializeComponent();
         }
-        
-        
-
 
         GameLogic _gameLogic = new GameLogic();
 

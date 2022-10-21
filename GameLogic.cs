@@ -28,7 +28,7 @@ namespace SOS
         private const string general = "GENERAL";
 
 
-        private CellData[,] Board = new CellData[3, 3];
+        public CellData[,] Board = new CellData[3, 3];
         public bool GameDone = false;
 
 
@@ -74,6 +74,55 @@ namespace SOS
             {
                 redPlayer.placementType = value;
             }
+        }
+
+
+        //Test Method usage only
+        public void generateLogicBoard()
+        {
+            CellData[] cellData = new CellData[6];
+            for(int i = 0; i < 6; i++)
+            {
+                if (i % 2 == 0)
+                    cellData[i] = new CellData("S", "BLUE");
+                else
+                    cellData[i] = new CellData("O", "RED"); 
+            }
+            int count = 0;
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    Board[i, j] = cellData[count];
+                    count++;
+                }
+            }
+        }
+
+        public void setGameMode(string gameMode)
+        {
+            CurrentGameMode = gameMode;
+        }
+
+        public void makeMove(string type, string playerColor, Position position)
+        {
+            if (!String.IsNullOrEmpty(Board[position.x, position.y].value))
+            {
+                return;
+            }
+            else
+            {
+                Board[position.x, position.y] = new CellData(type, playerColor);
+                SetNextPlayer();
+            }
+                
+
+        }
+
+        public CellData getCellData(Position position)
+        {
+            return Board[position.x, position.y];
         }
     }
 }
