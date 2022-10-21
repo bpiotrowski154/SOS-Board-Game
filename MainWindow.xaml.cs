@@ -99,7 +99,7 @@ namespace SOS
                 {
                     Button button = new Button();
                     button.FontSize = fontSize;
-                    button.SetValue(Button.BackgroundProperty, Brushes.White);
+                    button.SetValue(BackgroundProperty, Brushes.White);
                     button.SetValue(Grid.ColumnProperty, i);
                     button.SetValue(Grid.RowProperty, j);
                     gameBoardGrid.Children.Add(button);
