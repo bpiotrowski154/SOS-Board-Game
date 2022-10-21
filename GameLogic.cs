@@ -12,6 +12,7 @@ namespace SOS
 {
     public class GameLogic
     {
+
         private static SolidColorBrush blueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0D80FF"));
         private static SolidColorBrush redBrush = new SolidColorBrush(Colors.Red);
 
@@ -27,16 +28,20 @@ namespace SOS
         private const string general = "GENERAL";
 
 
-        private string[,] Board = new string[3, 3];
+        private CellData[,] Board = new CellData[3, 3];
         public bool GameDone = false;
 
 
+        public void updateBoard(Position position, CellData value)
+        {
+            Board[position.x, position.y] = value;
+        }
 
-        public void updateBoardVar(int boardSize)
+        public void updateBoardVariableSize(int boardSize)
         {
             if (boardSize != 3)
             {
-                Board = new string[boardSize, boardSize];
+                Board = new CellData[boardSize, boardSize];
                 return;
             }
             return;
@@ -59,7 +64,16 @@ namespace SOS
                 CurrentPlayer = blue;
         }
 
-
-
+        public void updatePlayerPlacementType(string playerColor, string value)
+        {
+            if (playerColor == blue)
+            {
+                bluePlayer.placementType = value;
+            }
+            else if (playerColor == red)
+            {
+                redPlayer.placementType = value;
+            }
+        }
     }
 }
