@@ -24,7 +24,6 @@ namespace GameLogicTests
 
             Assert.AreEqual(expectedCellData, actualCellData);
             Assert.AreEqual(expectedPlayer, actualPlayer);
-
         }
 
         [TestMethod]
@@ -48,9 +47,9 @@ namespace GameLogicTests
 
             Assert.AreNotEqual(expectedCellData, actualCellData1);
             Assert.AreNotEqual(expectedCellData, actualCellData2);
-            Assert.AreEqual(expectedPlayer, actualPlayer);
-            
+            Assert.AreEqual(expectedPlayer, actualPlayer);          
         }
+
         [TestMethod]
         public void InvalidOPlacement_SimpleGame()
         {
@@ -74,6 +73,7 @@ namespace GameLogicTests
             Assert.AreNotEqual(expectedCellData, actualCellData2);
             Assert.AreEqual(expectedPlayer, actualPlayer);
         }
+
         [TestMethod]
         public void ValidSOrOPlacement_GeneralGame()
         {
@@ -119,6 +119,7 @@ namespace GameLogicTests
             Assert.AreNotEqual(expectedCellData, actualCellData2);
             Assert.AreEqual(expectedPlayer, actualPlayer);
         }
+
         [TestMethod]
         public void InvalidOPlacement_GeneralGame()
         {
