@@ -25,18 +25,22 @@ namespace SOS
         private const string blue = "BLUE";
         private const string red = "RED";
 
+        public string WinMessage { get; set; }
+
         public string CurrentGameMode { get; set; } = simple;
         private const string simple = "SIMPLE";
         private const string general = "GENERAL";
 
 
         public CellData[,] Board = new CellData[3, 3];
+        public int BoardCount = 0;
         public bool GameDone = false;
 
 
         public void updateBoard(Position position, CellData value)
         {
             Board[position.x, position.y] = value;
+            BoardCount++;
         }
 
         public void updateBoardVariableSize(int boardSize)
@@ -84,19 +88,68 @@ namespace SOS
             {
                 if (playerInfo.value == "S")
                 {
-                    if(checkSPlacement(position) > 1)
+                    if(checkSPlacement(position) > 0)
                     {
                         GameDone = true;
+                        WinMessage = CurrentPlayer + " WINS!";
                     }
                 }
-                else
+                else if (playerInfo.value == "O")
                 {
+                    if (checkOPlacement(position) > 0)
+                    {
+                        GameDone = true;
+                        WinMessage = CurrentPlayer + " WINS!";
+                    }
+                }
 
+                if (Board.Length == BoardCount)
+                {
+                    GameDone = true;
+                    WinMessage = "DRAW";
                 }
             }
             else
             {
+                if (playerInfo.value == "S")
+                {
+                    if(CurrentPlayer == blue)
+                    {
+                        bluePlayer.totalPoints += checkSPlacement(position);
+                    }
+                    else
+                    {
+                        redPlayer.totalPoints += checkSPlacement(position);
+                    }
+                }
+                else
+                {
+                    if (CurrentPlayer == blue)
+                    {
+                        bluePlayer.totalPoints += checkOPlacement(position);
+                    }
+                    else
+                    {
+                        redPlayer.totalPoints += checkOPlacement(position);
+                    }
+                }
 
+                if (Board.Length == BoardCount)
+                {
+                    GameDone = true;
+                    if(bluePlayer.totalPoints > redPlayer.totalPoints)
+                    {
+                        WinMessage = blue + "WINS!";
+                    }
+                    else if (redPlayer.totalPoints > bluePlayer.totalPoints)
+                    {
+                        WinMessage = red + "WINS!";
+                    }
+                    else
+                    {
+                        WinMessage = "DRAW";
+                    }
+                }
             }
         }
 
@@ -201,69 +254,56 @@ namespace SOS
             }
                 
             return pointsScored;
-            /*int rowIndx = Math.Max(0, position.y - 1);
-             int colIndx = Math.Max(0, position.x - 1);
-             int rowLength = 3;
-             int colLength = 3;
-             int iCounter = 0;
-             int jCounter = 0;
+        }
 
-             //If the cell clicked was in the anywhere in the left column only check two spots over instead
-             if(rowIndx == 0)
-             {
-                 rowLength = 2;
-             }
-             if(colIndx == 0)
-             {
-                 colLength = 2;
-             }
-
-             for (int i = rowIndx; i < (rowIndx+3); i++)
-             {
-                 for(int j = colIndx; j < (colIndx+3); j++)
-                 {
-                     if (i == position.x && j == position.y)
-                         continue;
-                     try
-                     {
-                         if (Board[i,j].value == "O")
-                         {
-                             if (iCounter == 0) // Checking the three cells in row above
-                             {
-                                 if (jCounter == 0)//Checking top left corner
-                                 {
-
-                                 }
-                                 else if(jCounter == 1)//Checking cell above
-                                 {
-
-                                 }
-                                 else//checking top right corner
-                                 {
-
-                                 }
-                             }
-                             else if (iCounter == 1) //Checking the two side cells
-                             {
-
-                             }
-                             else // Checking the three cells in row below
-                             {
-
-                             }
-                         }
-                     }
-                     catch(IndexOutOfRangeException e)
-                     {
-                         continue;
-                     }
-
-                     jCounter++;
-                 }
-                 iCounter++;
-             }
-             //Check two side cells
-             //Check bottom three cells*/
+        public int checkOPlacement(Position position)
+        {
+            int pointsScored = 0;
+            
+            for (int i = 0; i < 4; i++)
+            {
+                try
+                {
+                    switch (i)
+                    {
+                        case 0: //Check for S's above and below
+                            if(Board[position.x, position.y - 1].value == "S" && Board[position.x, position.y + 1].value == "S")
+                            {
+                                pointsScored++;
+                                //DrawLineFunction()
+                            }
+                            break;
+                        case 1: //Check for S's on left and right
+                            if (Board[position.x - 1, position.y].value == "S" && Board[position.x + 1, position.y].value == "S")
+                            {
+                                pointsScored++;
+                                //DrawLineFunction()
+                            }
+                            break;
+                        case 2: //Check for S/s on top left and bottome right
+                            if (Board[position.x - 1, position.y - 1].value == "S" && Board[position.x + 1, position.y + 1].value == "S")
+                            {
+                                pointsScored++;
+                                //DrawLineFunction()
+                            }
+                            break;
+                        case 3: //Check for S's on top right and bottom left
+                            if (Board[position.x + 1, position.y - 1].value == "S" && Board[position.x - 1, position.y + 1].value == "S")
+                            {
+                                pointsScored++;
+                                //DrawLineFunction()
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch(IndexOutOfRangeException e)
+                {
+                    continue;
+                }
+            }
+            return pointsScored;
         }
 
 

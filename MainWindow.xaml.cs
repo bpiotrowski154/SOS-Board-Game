@@ -66,6 +66,13 @@ namespace SOS
                 cell.Foreground = _gameLogic.redPlayer.colorValue;
                 cell.Content = _gameLogic.redPlayer.placementType;
                 _gameLogic.updateBoard(ButtonPosition, cellData);
+                _gameLogic.checkForWinOrPoint(_gameLogic.CurrentGameMode, cellData, ButtonPosition);
+            }
+
+            if(_gameLogic.GameDone == true)
+            {
+                winScreen.Text = _gameLogic.WinMessage;
+                winScreen.Visibility = Visibility.Visible;
             }
 
             _gameLogic.SetNextPlayer();
@@ -84,6 +91,7 @@ namespace SOS
             setRedPlayerInitPlacementType();
             updateGameModeDisplay();
             updatePlayerTurnDisplay();
+            winScreen.Visibility = Visibility.Collapsed;
         }
 
         //Generates a new game board by removing all of the elements of the current

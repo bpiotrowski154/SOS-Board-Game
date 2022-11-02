@@ -83,6 +83,9 @@
                        Text="{Binding playerTurnDisplay,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
         </StackPanel>
 
+        <TextBlock x:Name="winScreen" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="3"
+                   FontSize="56" FontWeight="Bold" Background="WhiteSmoke" Visibility="Collapsed"/>
+
     </Grid>    
     
     
