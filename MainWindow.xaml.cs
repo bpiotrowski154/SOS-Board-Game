@@ -58,6 +58,7 @@ namespace SOS
                 cell.Foreground = _gameLogic.bluePlayer.colorValue;
                 cell.Content = _gameLogic.bluePlayer.placementType;
                 _gameLogic.updateBoard(ButtonPosition, cellData);
+                _gameLogic.checkForWinOrPoint(_gameLogic.CurrentGameMode, cellData, ButtonPosition);
             }
             else
             {
