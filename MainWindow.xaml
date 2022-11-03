@@ -20,7 +20,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid x:Name="WindowGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="200"/>
@@ -61,17 +61,21 @@
                        FontFamily="Calibri" FontSize="36" Foreground="#FF0D80FF" FontWeight="Bold"/>
             <RadioButton x:Name="blueSBtn" Content="S" HorizontalAlignment="Center" FontSize="36" IsChecked="True" Foreground="#FF0D80FF" Checked="setBluePlayerPlacementType"/>
             <RadioButton Content="O" HorizontalAlignment="Center" FontSize="36" Foreground="#FF0D80FF" Checked="setBluePlayerPlacementType"/>
+            <TextBlock FontSize ="18" FontFamily="Calibri"
+                       Text="{Binding bluePointsDisplay, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
         </StackPanel>
 
         <Grid x:Name="gameBoardGrid" Grid.Column="3" Grid.Row="3" Background="Black"/>
 
-
+        <Canvas x:Name="MainCanvas" Grid.Column="3" Grid.Row="3"/>
 
         <StackPanel Grid.Column="5" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="RED" HorizontalAlignment="Center" VerticalAlignment="Center" 
                        FontFamily="Calibri" FontSize="24" Foreground="Red" FontWeight="Bold"/>
             <RadioButton x:Name="redSBtn" Content="S" HorizontalAlignment="Center" FontSize="36" IsChecked="True" Foreground="Red" Checked="setRedPlayerPlacementType"/>
             <RadioButton Content="O" HorizontalAlignment="Center" FontSize="36" Foreground="Red" Checked="setRedPlayerPlacementType"/>
+            <TextBlock FontSize ="18" FontFamily="Calibri"
+                       Text="{Binding redPointsDisplay, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
         </StackPanel>
 
         <Button Content="New Game" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Click="newGameBtn_Clicked"/>

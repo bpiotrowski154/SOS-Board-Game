@@ -82,21 +82,24 @@ namespace SOS
             }
         }
 
-        public void checkForWinOrPoint(string gameMode, CellData playerInfo, Position position)
+        public List<int> checkForWinOrPoint(string gameMode, CellData playerInfo, Position position)
         {
+            List<int> cases = new List<int>();
             if (gameMode == simple)
             {
                 if (playerInfo.value == "S")
                 {
-                    if(checkSPlacement(position) > 0)
+                    cases = checkSPlacement(position);
+                    if (cases.Last() > 0)
                     {
                         GameDone = true;
                         WinMessage = CurrentPlayer + " WINS!";
                     }
                 }
-                else if (playerInfo.value == "O")
+                else
                 {
-                    if (checkOPlacement(position) > 0)
+                    cases = checkOPlacement(position);
+                    if (cases.Last() > 0)
                     {
                         GameDone = true;
                         WinMessage = CurrentPlayer + " WINS!";
@@ -108,53 +111,46 @@ namespace SOS
                     GameDone = true;
                     WinMessage = "DRAW";
                 }
+
+                return cases;
             }
             else
             {
                 if (playerInfo.value == "S")
                 {
+                    cases = checkSPlacement(position);
+
                     if(CurrentPlayer == blue)
-                    {
-                        bluePlayer.totalPoints += checkSPlacement(position);
-                    }
+                        bluePlayer.totalPoints += cases.Last();
                     else
-                    {
-                        redPlayer.totalPoints += checkSPlacement(position);
-                    }
+                        redPlayer.totalPoints += cases.Last();
                 }
                 else
                 {
+                    cases = checkOPlacement(position);
                     if (CurrentPlayer == blue)
-                    {
-                        bluePlayer.totalPoints += checkOPlacement(position);
-                    }
+                        bluePlayer.totalPoints += cases.Last();
                     else
-                    {
-                        redPlayer.totalPoints += checkOPlacement(position);
-                    }
+                        redPlayer.totalPoints += cases.Last();
                 }
 
                 if (Board.Length == BoardCount)
                 {
                     GameDone = true;
                     if(bluePlayer.totalPoints > redPlayer.totalPoints)
-                    {
                         WinMessage = blue + "WINS!";
-                    }
                     else if (redPlayer.totalPoints > bluePlayer.totalPoints)
-                    {
                         WinMessage = red + "WINS!";
-                    }
                     else
-                    {
                         WinMessage = "DRAW";
-                    }
                 }
+                return cases;
             }
         }
 
-        public int checkSPlacement(Position position)
+        public List<int> checkSPlacement(Position position)
         {
+            List<int> cases= new List<int>();
             int pointsScored = 0;
             for (int i = 0; i < 8; i++)
             {
@@ -164,83 +160,67 @@ namespace SOS
                     {
                         case 0: //Top left corner
                             if (Board[position.x - 1, position.y - 1].value == "O")
-                            {
                                 if (Board[position.x - 2, position.y - 2].value == "S")
                                 {
                                     pointsScored++;
-                                    //DrawLineFunction()
+                                    cases.Add(0);
                                 }
-                            }
                             break;
                         case 1: //Top middle cell
                             if (Board[position.x, position.y - 1].value == "O")
-                            {
                                 if (Board[position.x, position.y - 2].value == "S")
                                 {
                                     pointsScored++;
-                                    //DrawLineFunction()
+                                    cases.Add(1);
                                 }
-                            }
                             break;
                         case 2: //Top right corner
                             if (Board[position.x + 1, position.y - 1].value == "O")
-                            {
                                 if (Board[position.x + 2, position.y - 2].value == "S")
                                 {
                                     pointsScored++;
-                                    //DrawLineFunction()
+                                    cases.Add(2);
                                 }
-                            }
                             break;
                         case 3: //Left side cell
                             if (Board[position.x - 1, position.y].value == "O")
-                            {
                                 if (Board[position.x - 2, position.y].value == "S")
                                 {
                                     pointsScored++;
-                                    //DrawLineFunction()
+                                    cases.Add(3);
                                 }
-                            }
                             break;
                         case 4: //Right side cell
                             if (Board[position.x + 1, position.y].value == "O")
-                            {
                                 if (Board[position.x + 2, position.y].value == "S")
                                 {
                                     pointsScored++;
-                                    //DrawLineFunction()
+                                    cases.Add(4);
                                 }
-                            }
                             break;
                         case 5: //Bottom left corner
                             if (Board[position.x - 1, position.y + 1].value == "O")
-                            {
                                 if (Board[position.x - 2, position.y + 2].value == "S")
                                 {
                                     pointsScored++;
-                                    //DrawLineFunction()
+                                    cases.Add(5);
                                 }
-                            }
                             break;
                         case 6: //Bottom middle cell
                             if (Board[position.x, position.y + 1].value == "O")
-                            {
                                 if (Board[position.x, position.y + 2].value == "S")
                                 {
                                     pointsScored++;
-                                    //DrawLineFunction()
+                                    cases.Add(6);
                                 }
-                            }
                             break;
                         case 7: //Bottom right corner
                             if (Board[position.x + 1, position.y + 1].value == "O")
-                            {
                                 if (Board[position.x + 2, position.y + 2].value == "S")
                                 {
                                     pointsScored++;
-                                    //DrawLineFunction()
+                                    cases.Add(7);
                                 }
-                            }
                             break;
                         default:
                             break;
@@ -252,12 +232,14 @@ namespace SOS
                     continue;
                 }
             }
-                
-            return pointsScored;
+            
+            cases.Add(pointsScored);
+            return cases;
         }
 
-        public int checkOPlacement(Position position)
+        public List<int> checkOPlacement(Position position)
         {
+            List<int> cases = new List<int>();
             int pointsScored = 0;
             
             for (int i = 0; i < 4; i++)
@@ -270,28 +252,28 @@ namespace SOS
                             if(Board[position.x, position.y - 1].value == "S" && Board[position.x, position.y + 1].value == "S")
                             {
                                 pointsScored++;
-                                //DrawLineFunction()
+                                cases.Add(8);
                             }
                             break;
                         case 1: //Check for S's on left and right
                             if (Board[position.x - 1, position.y].value == "S" && Board[position.x + 1, position.y].value == "S")
                             {
                                 pointsScored++;
-                                //DrawLineFunction()
+                                cases.Add(9);
                             }
                             break;
                         case 2: //Check for S/s on top left and bottome right
                             if (Board[position.x - 1, position.y - 1].value == "S" && Board[position.x + 1, position.y + 1].value == "S")
                             {
                                 pointsScored++;
-                                //DrawLineFunction()
+                                cases.Add(10);
                             }
                             break;
                         case 3: //Check for S's on top right and bottom left
                             if (Board[position.x + 1, position.y - 1].value == "S" && Board[position.x - 1, position.y + 1].value == "S")
                             {
                                 pointsScored++;
-                                //DrawLineFunction()
+                                cases.Add(11);
                             }
                             break;
                         default:
@@ -303,9 +285,9 @@ namespace SOS
                     continue;
                 }
             }
-            return pointsScored;
+            cases.Add(pointsScored);
+            return cases;
         }
-
 
         //Test Method usage only
         public void generateLogicBoard()
@@ -346,8 +328,6 @@ namespace SOS
                 Board[position.x, position.y] = new CellData(type, playerColor);
                 SetNextPlayer();
             }
-                
-
         }
 
         public CellData getCellData(Position position)
