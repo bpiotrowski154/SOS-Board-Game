@@ -138,9 +138,9 @@ namespace SOS
                 {
                     GameDone = true;
                     if(bluePlayer.totalPoints > redPlayer.totalPoints)
-                        WinMessage = blue + "WINS!";
+                        WinMessage = blue + " WINS!";
                     else if (redPlayer.totalPoints > bluePlayer.totalPoints)
-                        WinMessage = red + "WINS!";
+                        WinMessage = red + " WINS!";
                     else
                         WinMessage = "DRAW";
                 }
@@ -308,6 +308,39 @@ namespace SOS
                 {
                     Board[i, j] = cellData[count];
                     count++;
+                    BoardCount++;
+                }
+            }
+        }
+
+        public void generateLogicBoard2()
+        {
+            CellData[] cellData = new CellData[6];
+            for (int i = 0; i < 6; i++)
+            {
+                if (i % 2 == 0)
+                    cellData[i] = new CellData("S", "BLUE");
+                else
+                    cellData[i] = new CellData("O", "RED");
+            }
+            int count = 0;
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    if(i == 1 && j == 1)
+                    {
+                        Board[i, j] = new CellData("S", "RED");
+                        count++;
+                        BoardCount++;
+                    }
+                    else
+                    {
+                        Board[i, j] = cellData[count];
+                        count++;
+                        BoardCount++;
+                    }
                 }
             }
         }
@@ -325,7 +358,15 @@ namespace SOS
             }
             else
             {
-                Board[position.x, position.y] = new CellData(type, playerColor);
+                CellData cellData = new CellData(type, playerColor);
+                Board[position.x, position.y] = cellData;
+                BoardCount++;
+                List<int> temp = new List<int>();
+                temp = checkForWinOrPoint(CurrentGameMode, cellData, position);
+                if (temp.Count > 1 && CurrentGameMode == "GENERAL")
+                {
+                    return;
+                }
                 SetNextPlayer();
             }
         }

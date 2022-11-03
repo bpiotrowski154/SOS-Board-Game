@@ -73,6 +73,69 @@ namespace GameLogicTests
             Assert.AreNotEqual(expectedCellData, actualCellData2);
             Assert.AreEqual(expectedPlayer, actualPlayer);
         }
+        [TestMethod]
+        public void FirstSOSFormed_SimpleGame()
+        {
+            GameLogic gameLogic = new GameLogic();
+            gameLogic.setGameMode("SIMPLE");
+            gameLogic.generateLogicBoard();
+
+            Position position = new Position(0, 2);
+
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position);
+
+            bool expectedGameDone = true;
+            bool actualGameDone = gameLogic.GameDone;
+            string expectedWinner = "BLUE WINS!";
+            string actualWinner = gameLogic.WinMessage;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreEqual(expectedWinner, actualWinner);
+
+        }
+
+        [TestMethod]
+        public void ContinuingGameAfterSorOMove_SimpleGame()
+        {
+            GameLogic gameLogic = new GameLogic();
+            gameLogic.setGameMode("SIMPLE");
+            gameLogic.generateLogicBoard();
+
+            Position position1 = new Position(0, 2);
+
+            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
+
+            bool expectedGameDone = false;
+            bool actualGameDone = gameLogic.GameDone;
+            string actualWinner = gameLogic.WinMessage;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.IsNull(actualWinner);
+        }
+
+        [TestMethod]
+        public void DrawGame_SimpleGame()
+        {
+            GameLogic gameLogic = new GameLogic();
+            gameLogic.setGameMode("SIMPLE");
+            gameLogic.generateLogicBoard();
+
+            Position position1 = new Position(0, 2);
+            Position position2 = new Position(1, 2);
+            Position position3 = new Position(2, 2);
+            
+            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
+            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position2);
+            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position3);
+
+            bool expectedGameDone = true;
+            bool actualGameDone = gameLogic.GameDone;
+            string expectedWinner = "DRAW";
+            string actualWinner = gameLogic.WinMessage;
+
+            Assert.AreEqual(expectedWinner, actualWinner);
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+        }
 
         [TestMethod]
         public void ValidSOrOPlacement_GeneralGame()
@@ -142,6 +205,97 @@ namespace GameLogicTests
             Assert.AreNotEqual(expectedCellData, actualCellData1);
             Assert.AreNotEqual(expectedCellData, actualCellData2);
             Assert.AreEqual(expectedPlayer, actualPlayer);
+        }
+
+        [TestMethod]
+        public void ValidSorOPlacementWithSOSFormed_GeneralGame()
+        {
+            GameLogic gameLogic = new GameLogic();
+            gameLogic.setGameMode("GENERAL");
+            gameLogic.generateLogicBoard();
+
+            Position position1 = new Position(0, 2);
+
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
+
+            bool expectedGameDone = false;
+            bool actualGameDone = gameLogic.GameDone;
+            string expectedPlayerTurn = "BLUE";
+            string actualPlayerTurn = gameLogic.CurrentPlayer;
+            string actualWinMessage = gameLogic.WinMessage;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreEqual(expectedPlayerTurn, actualPlayerTurn);
+            Assert.IsNull(actualWinMessage);
+        }
+
+        [TestMethod]
+        public void BoardBecomesFullAndNotDrawGame_GeneralGame()
+        {
+            GameLogic gameLogic = new GameLogic();
+            gameLogic.setGameMode("GENERAL");
+            gameLogic.generateLogicBoard();
+
+            Position position1 = new Position(0, 2);
+            Position position2 = new Position(1, 2);
+            Position position3 = new Position(2, 2);
+
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position3);
+
+            bool expectedGameDone = true;
+            bool actualGameDone = gameLogic.GameDone;
+            string expectedWinMessage = "BLUE WINS!";
+            string actualWinMessage = gameLogic.WinMessage;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreEqual(expectedWinMessage, actualWinMessage);
+        }
+
+        [TestMethod]
+        public void ContinuingGameAfterSorOMove_GeneralGame()
+        {
+            GameLogic gameLogic = new GameLogic();
+            gameLogic.setGameMode("GENERAL");
+            gameLogic.generateLogicBoard();
+
+            Position position = new Position(0, 2);
+
+            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position);
+
+            bool expectedGameDone = false;
+            bool actualGameDone = gameLogic.GameDone;
+            string expectedCurrentPlayer = "RED";
+            string actualCurrentPlayer = gameLogic.CurrentPlayer;
+            string actualWinMessage = gameLogic.WinMessage;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreEqual(expectedCurrentPlayer, actualCurrentPlayer);
+            Assert.IsNull(actualWinMessage);
+        }
+        [TestMethod]
+        public void DrawGame_Generalgame()
+        {
+            GameLogic gameLogic = new GameLogic();
+            gameLogic.setGameMode("GENERAL");
+            gameLogic.generateLogicBoard2();
+
+            Position position1 = new Position(0, 2);
+            Position position2 = new Position(1, 2);
+            Position position3 = new Position(2, 2);
+
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position3);
+
+            bool expectedGameDone = true;
+            bool actualGameDone = gameLogic.GameDone;
+            string expectedWinMessage = "DRAW";
+            string actualWinMessage = gameLogic.WinMessage;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreEqual(expectedWinMessage, actualWinMessage);
         }
     }
 }
