@@ -14,7 +14,6 @@ namespace SOS
 {
     public class GameLogic
     {
-
         private static SolidColorBrush blueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0D80FF"));
         private static SolidColorBrush redBrush = new SolidColorBrush(Colors.Red);
 
@@ -31,11 +30,9 @@ namespace SOS
         private const string simple = "SIMPLE";
         private const string general = "GENERAL";
 
-
         public CellData[,] Board = new CellData[3, 3];
         public int BoardCount = 0;
         public bool GameDone = false;
-
 
         public void updateBoard(Position position, CellData value)
         {
@@ -73,13 +70,9 @@ namespace SOS
         public void updatePlayerPlacementType(string playerColor, string value)
         {
             if (playerColor == blue)
-            {
                 bluePlayer.placementType = value;
-            }
             else if (playerColor == red)
-            {
                 redPlayer.placementType = value;
-            }
         }
 
         public List<int> checkForWinOrPoint(string gameMode, CellData playerInfo, Position position)
@@ -128,6 +121,7 @@ namespace SOS
                 else
                 {
                     cases = checkOPlacement(position);
+
                     if (CurrentPlayer == blue)
                         bluePlayer.totalPoints += cases.Last();
                     else
@@ -137,6 +131,7 @@ namespace SOS
                 if (Board.Length == BoardCount)
                 {
                     GameDone = true;
+
                     if(bluePlayer.totalPoints > redPlayer.totalPoints)
                         WinMessage = blue + " WINS!";
                     else if (redPlayer.totalPoints > bluePlayer.totalPoints)
@@ -152,6 +147,7 @@ namespace SOS
         {
             List<int> cases= new List<int>();
             int pointsScored = 0;
+
             for (int i = 0; i < 8; i++)
             {
                 try
@@ -224,7 +220,6 @@ namespace SOS
                             break;
                         default:
                             break;
-
                     }
                 }
                 catch(IndexOutOfRangeException e)
@@ -353,9 +348,7 @@ namespace SOS
         public void makeMove(string type, string playerColor, Position position)
         {
             if (!String.IsNullOrEmpty(Board[position.x, position.y].value))
-            {
                 return;
-            }
             else
             {
                 CellData cellData = new CellData(type, playerColor);
@@ -363,10 +356,10 @@ namespace SOS
                 BoardCount++;
                 List<int> temp = new List<int>();
                 temp = checkForWinOrPoint(CurrentGameMode, cellData, position);
+
                 if (temp.Count > 1 && CurrentGameMode == "GENERAL")
-                {
                     return;
-                }
+
                 SetNextPlayer();
             }
         }

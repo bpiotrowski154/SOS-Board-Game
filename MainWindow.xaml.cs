@@ -82,14 +82,10 @@ namespace SOS
             }
 
             if (cases.Count > 1 && _gameLogic.CurrentGameMode == "GENERAL")
-            {
-                //updatePlayerPointsDisplay();
                 return;
-            }
 
             _gameLogic.SetNextPlayer();
             updatePlayerTurnDisplay();
-            //updatePlayerPointsDisplay();
         }
 
 
@@ -185,13 +181,9 @@ namespace SOS
         private void updateGameModeDisplay()
         {
             if (simpleGameBtn.IsChecked == true)
-            {
                 gameModeDisplay = "Current Game Mode: Simple";
-            }
             else
-            {
                 gameModeDisplay = "Current Game Mode: General";
-            }
         }
 
         //Method to update the playerTurnDisplay variable and display the update on GUI.
@@ -213,14 +205,9 @@ namespace SOS
         private string getGameMode()
         {
             if (simpleGameBtn.IsChecked == true)
-            {
                 return "SIMPLE";
-            }
             else
-            {
                 return "GENERAL";
-            }
-
         }
 
         //Method to update the placement type of the blue player
