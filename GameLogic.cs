@@ -17,6 +17,10 @@ namespace SOS
         private static SolidColorBrush blueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0D80FF"));
         private static SolidColorBrush redBrush = new SolidColorBrush(Colors.Red);
 
+        //Create new constructor for the different player type scenarios
+        // H v H  H v C  C v H  C v C
+        //Potentially need to 
+
         public Player bluePlayer = new Player(blue, blueBrush);
         public Player redPlayer = new Player(red, redBrush);
 

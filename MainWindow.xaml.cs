@@ -76,7 +76,6 @@ namespace SOS
 
             if (_gameLogic.GameDone == true)
             {
-                //updatePlayerPointsDisplay();
                 winScreen.Text = _gameLogic.WinMessage;
                 winScreen.Visibility = Visibility.Visible;
             }
@@ -245,9 +244,7 @@ namespace SOS
         public void DrawCases(List<int> cases, Color color, int boardSize, Position position)
         {
             if (cases.Count == 1)
-            {
                 return;
-            }
             
             Position topLeftCorner = new Position(position.x * 500 / boardSize, position.y * 500 / boardSize);
             Position topMiddle = new Position((position.x * 500 / boardSize) + (250 / boardSize), position.y * 500 / boardSize);
