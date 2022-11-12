@@ -14,6 +14,38 @@ namespace SOS
 {
     public class GameLogic
     {
+        public GameLogic(int boardSize, string gameMode, int player1Type, int player2Type)
+        {
+            Board = new CellData[boardSize, boardSize];
+            CurrentGameMode = gameMode;
+            WinMessage = "";
+
+            if(player1Type == 0 && player2Type == 0) //H v H
+            {
+                bluePlayer = new Player(blue, blueBrush);
+                redPlayer = new Player(red, redBrush);
+                CurrentPlayerType = player;
+            }
+            else if (player1Type == 0 && player2Type == 1) //H v C
+            {
+                bluePlayer = new Player(blue, blueBrush);
+                redPlayer = new ComputerPlayer(red, redBrush);
+                CurrentPlayerType = player;
+            }
+            else if (player1Type == 1 && player2Type == 0) // C v H
+            {
+                bluePlayer = new ComputerPlayer(blue, blueBrush);
+                redPlayer = new Player(red, redBrush);
+                CurrentPlayerType = computer;
+            }
+            else //C v C
+            {
+                bluePlayer = new ComputerPlayer(blue, blueBrush);
+                redPlayer = new ComputerPlayer(red, redBrush);
+                CurrentPlayerType = computer;
+            }
+        }
+
         private static SolidColorBrush blueBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0D80FF"));
         private static SolidColorBrush redBrush = new SolidColorBrush(Colors.Red);
 
@@ -21,8 +53,8 @@ namespace SOS
         // H v H  H v C  C v H  C v C
         //Potentially need to 
 
-        public Player bluePlayer = new Player(blue, blueBrush);
-        public Player redPlayer = new Player(red, redBrush);
+        public Player bluePlayer; //= new Player(blue, blueBrush);
+        public Player redPlayer; //= new Player(red, redBrush);
 
         public string CurrentPlayer { get; set; } = blue;
         private const string blue = "BLUE";
@@ -30,7 +62,11 @@ namespace SOS
 
         public string WinMessage { get; set; }
 
-        public string CurrentGameMode { get; set; } = simple;
+        public string CurrentPlayerType { get; set; }
+        private const string player = "PLAYER";
+        private const string computer = "COMPUTER";
+
+        public string CurrentGameMode { get; set; }
         private const string simple = "SIMPLE";
         private const string general = "GENERAL";
 
@@ -44,7 +80,7 @@ namespace SOS
             BoardCount++;
         }
 
-        public void updateBoardVariableSize(int boardSize)
+        /*public void updateBoardVariableSize(int boardSize)
         {
             if (boardSize != 3)
             {
@@ -52,8 +88,8 @@ namespace SOS
                 return;
             }
             return;
-        }
-        public void updateGameMode(string gameMode)
+        }*/
+        /*public void updateGameMode(string gameMode)
         {
             if (CurrentGameMode != gameMode)
             {
@@ -61,7 +97,7 @@ namespace SOS
                 return;
             }
             return;
-        }
+        }*/
 
         public void SetNextPlayer()
         {

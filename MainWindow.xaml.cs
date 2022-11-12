@@ -28,7 +28,7 @@ namespace SOS
             InitializeComponent();
         }
 
-        GameLogic _gameLogic = new GameLogic();
+        GameLogic _gameLogic = new GameLogic(3, "SIMPLE",0,0);
 
         private void PlayerClicksCell(object sender, RoutedEventArgs e)
         {
@@ -91,9 +91,9 @@ namespace SOS
         private void newGameBtn_Clicked(object sender, RoutedEventArgs e)
         {
             generateNewGameBoard();
-            _gameLogic = new GameLogic();
-            _gameLogic.updateBoardVariableSize((int)boardSize.Value);
-            _gameLogic.updateGameMode(getGameMode());
+            _gameLogic = new GameLogic((int)boardSize.Value, getGameMode());
+            //_gameLogic.updateBoardVariableSize((int)boardSize.Value);
+            //_gameLogic.updateGameMode(getGameMode());
             setBluePlayerInitPlacementType();
             setRedPlayerInitPlacementType();
             updateGameModeDisplay();
