@@ -55,23 +55,11 @@ namespace SOS
             //gameLogic.cs
             if (_gameLogic.CurrentPlayer == "BLUE")
             {
-                CellData cellData = new CellData(_gameLogic.bluePlayer.placementType, _gameLogic.bluePlayer.playerColor);
-                cell.Foreground = _gameLogic.bluePlayer.colorValue;
-                cell.Content = _gameLogic.bluePlayer.placementType;
-                _gameLogic.updateBoard(ButtonPosition, cellData);
-                cases = _gameLogic.checkForWinOrPoint(_gameLogic.CurrentGameMode, cellData, ButtonPosition);
-                DrawCases(cases, (Color)ColorConverter.ConvertFromString("#FF0D80FF"), (int)boardSize.Value, ButtonPosition);
-                updatePlayerPointsDisplay();
+                updateCurrentBoardDisplay(_gameLogic.bluePlayer.placementType, _gameLogic.bluePlayer.playerColor, _gameLogic.bluePlayer.colorValue, ref cell, ButtonPosition, (Color)ColorConverter.ConvertFromString("#FF0D80FF"));
             }
             else
             {
-                CellData cellData = new CellData(_gameLogic.redPlayer.placementType, _gameLogic.redPlayer.playerColor);
-                cell.Foreground = _gameLogic.redPlayer.colorValue;
-                cell.Content = _gameLogic.redPlayer.placementType;
-                _gameLogic.updateBoard(ButtonPosition, cellData);
-                cases = _gameLogic.checkForWinOrPoint(_gameLogic.CurrentGameMode, cellData, ButtonPosition);
-                DrawCases(cases, Colors.Red, (int)boardSize.Value, ButtonPosition);
-                updatePlayerPointsDisplay();
+                updateCurrentBoardDisplay(_gameLogic.redPlayer.placementType, _gameLogic.redPlayer.playerColor, _gameLogic.redPlayer.colorValue, ref cell, ButtonPosition, Colors.Red);
             }
 
             if (_gameLogic.GameDone == true)
@@ -87,13 +75,24 @@ namespace SOS
             updatePlayerTurnDisplay();
         }
 
+        private void updateCurrentBoardDisplay(string playerPlacementType,string playercolor, Brush colorValue, ref Button cell, Position buttonPosition, Color drawColor)
+        {
+            List<int> cases = new List<int>();
+
+            CellData cellData = new CellData(playerPlacementType, playercolor);
+            cell.Foreground = colorValue;
+            cell.Content = playerPlacementType;
+            _gameLogic.updateBoard(buttonPosition, cellData);
+            cases = _gameLogic.checkForWinOrPoint(_gameLogic.CurrentGameMode, cellData, buttonPosition);
+            DrawCases(cases, drawColor, (int)boardSize.Value, buttonPosition);
+            updatePlayerPointsDisplay();
+        }
+
 
         private void newGameBtn_Clicked(object sender, RoutedEventArgs e)
         {
             generateNewGameBoard();
-            _gameLogic = new GameLogic((int)boardSize.Value, getGameMode());
-            //_gameLogic.updateBoardVariableSize((int)boardSize.Value);
-            //_gameLogic.updateGameMode(getGameMode());
+            _gameLogic = new GameLogic((int)boardSize.Value, getGameMode(),0,0);
             setBluePlayerInitPlacementType();
             setRedPlayerInitPlacementType();
             updateGameModeDisplay();
@@ -101,6 +100,8 @@ namespace SOS
             updatePlayerPointsDisplay();
             winScreen.Visibility = Visibility.Collapsed;
             MainCanvas.Children.Clear();
+
+            //if currentPlayer is a computer call to a method where a computer makes a move
         }
 
         //Generates a new game board by removing all of the elements of the current
