@@ -7,6 +7,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 
@@ -14,25 +16,27 @@ namespace SOS
 {
     public class GameLogic
     {
-        public GameLogic(int boardSize, string gameMode, int player1Type, int player2Type)
+        public GameLogic(int boardSize, string gameMode, bool player1Human, bool player2Human)
         {
             Board = new CellData[boardSize, boardSize];
+            BoardSize = boardSize;
+            BoardCount = 0;
             CurrentGameMode = gameMode;
             WinMessage = "";
 
-            if(player1Type == 0 && player2Type == 0) //H v H
+            if (player1Human == true && player2Human == true) //H v H
             {
                 bluePlayer = new Player(blue, blueBrush);
                 redPlayer = new Player(red, redBrush);
                 CurrentPlayerType = player;
             }
-            else if (player1Type == 0 && player2Type == 1) //H v C
+            else if (player1Human == true && player2Human == false) //H v C
             {
                 bluePlayer = new Player(blue, blueBrush);
                 redPlayer = new ComputerPlayer(red, redBrush);
                 CurrentPlayerType = player;
             }
-            else if (player1Type == 1 && player2Type == 0) // C v H
+            else if (player1Human == false && player2Human == true) // C v H
             {
                 bluePlayer = new ComputerPlayer(blue, blueBrush);
                 redPlayer = new Player(red, redBrush);
@@ -71,7 +75,8 @@ namespace SOS
         private const string general = "GENERAL";
 
         public CellData[,] Board = new CellData[3, 3];
-        public int BoardCount = 0;
+        public int BoardCount;
+        public int BoardSize;
         public bool GameDone = false;
 
         public void updateBoard(Position position, CellData value)
@@ -322,6 +327,98 @@ namespace SOS
             }
             cases.Add(pointsScored);
             return cases;
+        }
+
+        public void computerPlayerMove(ref List<Button> buttons,Player currentPlayer, Color drawColor)
+        {
+            bool turnOver = false;
+            bool validPlacement = false;
+            List<int> cases = new List<int>();
+            //Check if the first move (board is empty). If so make random move.
+            if (BoardCount == 0)
+            {
+                int i = 0;
+                Random random = new Random();
+                i = random.Next(buttons.Count());
+
+                CellData cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
+                
+                var coordinates = buttons.ElementAt(i).Tag.ToString().Split(',');
+                var xValue = int.Parse(coordinates[0]);
+                var yValue = int.Parse(coordinates[1]);
+                var ButtonPosition = new Position(xValue, yValue);
+                
+                buttons.ElementAt(i).Foreground = currentPlayer.colorValue;
+                buttons.ElementAt(i).Content = currentPlayer.placementType;
+
+                updateBoard(ButtonPosition, cellData);
+                turnOver = true;
+                SetNextPlayer();
+                ((MainWindow)Application.Current.MainWindow).updatePlayerTurnDisplay();
+            }
+            //Check if a winning move can be made
+            //Check if blocking move is possible
+            //make random move
+            else
+            {
+                while(!turnOver)
+                {
+                    int i = 0;
+                    Random random = new Random();
+                    while (!validPlacement)
+                    {
+                        
+                        i = random.Next(buttons.Count());
+                        if (!String.IsNullOrWhiteSpace(buttons.ElementAt(i).Content?.ToString()))
+                            continue;
+                        else
+                            validPlacement = true;
+                    }
+
+                    setRandomPlacementTypeCPU(currentPlayer);
+
+                    CellData cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
+
+                    var coordinates = buttons.ElementAt(i).Tag.ToString().Split(',');
+                    var xValue = int.Parse(coordinates[0]);
+                    var yValue = int.Parse(coordinates[1]);
+                    var ButtonPosition = new Position(xValue, yValue);
+
+                    buttons.ElementAt(i).Foreground = currentPlayer.colorValue;
+                    buttons.ElementAt(i).Content = currentPlayer.placementType;
+
+                    updateBoard(ButtonPosition, cellData);
+
+                    cases = checkForWinOrPoint(CurrentGameMode, cellData, ButtonPosition);
+                    ((MainWindow)Application.Current.MainWindow).DrawCases(cases, drawColor, BoardSize, ButtonPosition);
+                    ((MainWindow)Application.Current.MainWindow).updatePlayerPointsDisplay();
+                
+                    if(GameDone)
+                    {
+                        ((MainWindow)Application.Current.MainWindow).winScreen.Text = WinMessage;
+                        ((MainWindow)Application.Current.MainWindow).winScreen.Visibility = Visibility.Visible;
+                        return;
+                    }
+                    if (CurrentGameMode == "SIMPLE")
+                        turnOver = true;
+                    else if (cases.Count <= 1)
+                        turnOver = true;
+                }
+
+                SetNextPlayer();
+                ((MainWindow)Application.Current.MainWindow).updatePlayerTurnDisplay();
+            }
+        }
+
+        private void setRandomPlacementTypeCPU(Player currentPlayer)
+        {
+            Random rand = new Random();
+            int i = rand.Next(0,2);
+
+            if (i == 0)
+                currentPlayer.placementType = "S";
+            else
+                currentPlayer.placementType = "O";
         }
 
         //Test Method usage only

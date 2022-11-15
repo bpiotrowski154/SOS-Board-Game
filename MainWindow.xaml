@@ -61,9 +61,14 @@
                        FontFamily="Calibri" FontSize="36" Foreground="#FF0D80FF" FontWeight="Bold"/>
             <RadioButton x:Name="blueSBtn" Content="S" HorizontalAlignment="Center" FontSize="36" IsChecked="True" Foreground="#FF0D80FF" Checked="setBluePlayerPlacementType"/>
             <RadioButton Content="O" HorizontalAlignment="Center" FontSize="36" Foreground="#FF0D80FF" Checked="setBluePlayerPlacementType"/>
+            <StackPanel>
+                <RadioButton x:Name="blueHumanBtn" Content="Human" HorizontalAlignment="Left" FontSize="30"  IsChecked="True" Foreground="#FF0D80FF"/>
+                <RadioButton x:Name="blueComputerBtn" Content="CPU" HorizontalAlignment="Left" FontSize="30" Foreground="#FF0D80FF"/>
+            </StackPanel>
             <TextBlock FontSize ="18" FontFamily="Calibri"
                        Text="{Binding bluePointsDisplay, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
         </StackPanel>
+        
 
         <Grid x:Name="gameBoardGrid" Grid.Column="3" Grid.Row="3" Background="Black"/>
 
@@ -74,6 +79,10 @@
                        FontFamily="Calibri" FontSize="24" Foreground="Red" FontWeight="Bold"/>
             <RadioButton x:Name="redSBtn" Content="S" HorizontalAlignment="Center" FontSize="36" IsChecked="True" Foreground="Red" Checked="setRedPlayerPlacementType"/>
             <RadioButton Content="O" HorizontalAlignment="Center" FontSize="36" Foreground="Red" Checked="setRedPlayerPlacementType"/>
+            <StackPanel>
+                <RadioButton x:Name="redHumanBtn" Content="Human" HorizontalAlignment="Left" FontSize="30" IsChecked="True" Foreground="Red"/>
+                <RadioButton x:Name="redComputerBtn" Content="CPU" HorizontalAlignment="Left" FontSize="30" Foreground="Red"/>
+            </StackPanel>
             <TextBlock FontSize ="18" FontFamily="Calibri"
                        Text="{Binding redPointsDisplay, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
         </StackPanel>

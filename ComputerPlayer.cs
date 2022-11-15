@@ -11,6 +11,7 @@ namespace SOS
     {
         public ComputerPlayer(string color, Brush colorValue) : base(color, colorValue)
         {
+            isComputer = true;
         }
     }
 }

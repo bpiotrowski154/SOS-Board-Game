@@ -16,10 +16,12 @@ namespace SOS
             this.colorValue = colorValue;
             this.placementType = "S";
             totalPoints = 0;
+            isComputer = false;
         }
         public string playerColor { get; set; }
         public Brush colorValue { get; set; }
         public string placementType {get; set; }
         public int totalPoints { get; set; }
+        public bool isComputer { get; set; }
     }
 }

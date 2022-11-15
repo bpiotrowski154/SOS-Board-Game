@@ -14,6 +14,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace SOS
 {
@@ -28,12 +29,14 @@ namespace SOS
             InitializeComponent();
         }
 
-        GameLogic _gameLogic = new GameLogic(3, "SIMPLE",0,0);
+        GameLogic _gameLogic = new GameLogic(3, "SIMPLE",true,true);
+        List<Button> gameBoardButtons = new List<Button>();
+        List<int> cases = new List<int>();
 
         private void PlayerClicksCell(object sender, RoutedEventArgs e)
         {
             var cell = (Button)sender;
-            List<int> cases = new List<int>();
+            //List<int> cases = new List<int>();
 
             //Checks if current cell is already occupied by an S or O or if it is the new game button
             if (!String.IsNullOrWhiteSpace(cell.Content?.ToString()))
@@ -55,17 +58,18 @@ namespace SOS
             //gameLogic.cs
             if (_gameLogic.CurrentPlayer == "BLUE")
             {
-                updateCurrentBoardDisplay(_gameLogic.bluePlayer.placementType, _gameLogic.bluePlayer.playerColor, _gameLogic.bluePlayer.colorValue, ref cell, ButtonPosition, (Color)ColorConverter.ConvertFromString("#FF0D80FF"));
+                updateCurrentBoardDisplay(_gameLogic.bluePlayer.placementType, _gameLogic.bluePlayer.playerColor, _gameLogic.bluePlayer.colorValue, ref cell, ButtonPosition, (Color)ColorConverter.ConvertFromString("#FF0D80FF"), ref cases);
             }
             else
             {
-                updateCurrentBoardDisplay(_gameLogic.redPlayer.placementType, _gameLogic.redPlayer.playerColor, _gameLogic.redPlayer.colorValue, ref cell, ButtonPosition, Colors.Red);
+                updateCurrentBoardDisplay(_gameLogic.redPlayer.placementType, _gameLogic.redPlayer.playerColor, _gameLogic.redPlayer.colorValue, ref cell, ButtonPosition, Colors.Red, ref cases);
             }
 
             if (_gameLogic.GameDone == true)
             {
                 winScreen.Text = _gameLogic.WinMessage;
                 winScreen.Visibility = Visibility.Visible;
+                return;
             }
 
             if (cases.Count > 1 && _gameLogic.CurrentGameMode == "GENERAL")
@@ -73,12 +77,19 @@ namespace SOS
 
             _gameLogic.SetNextPlayer();
             updatePlayerTurnDisplay();
+
+            if (_gameLogic.CurrentPlayer == "BLUE" && _gameLogic.bluePlayer.isComputer == true)
+            {
+                _gameLogic.computerPlayerMove(ref gameBoardButtons, _gameLogic.bluePlayer, (Color)ColorConverter.ConvertFromString("#FF0D80FF"));
+            }
+            else if (_gameLogic.CurrentPlayer == "RED" && _gameLogic.redPlayer.isComputer == true)
+            {
+                //redplayer makes auto move
+            }
         }
 
-        private void updateCurrentBoardDisplay(string playerPlacementType,string playercolor, Brush colorValue, ref Button cell, Position buttonPosition, Color drawColor)
+        private void updateCurrentBoardDisplay(string playerPlacementType,string playercolor, Brush colorValue, ref Button cell, Position buttonPosition, Color drawColor, ref List<int> cases)
         {
-            List<int> cases = new List<int>();
-
             CellData cellData = new CellData(playerPlacementType, playercolor);
             cell.Foreground = colorValue;
             cell.Content = playerPlacementType;
@@ -88,11 +99,13 @@ namespace SOS
             updatePlayerPointsDisplay();
         }
 
-
         private void newGameBtn_Clicked(object sender, RoutedEventArgs e)
         {
+            gameBoardButtons.Clear();
+            bool blueIsHuman = (bool)blueHumanBtn.IsChecked;
+            bool redIsHuman = (bool)redHumanBtn.IsChecked;
             generateNewGameBoard();
-            _gameLogic = new GameLogic((int)boardSize.Value, getGameMode(),0,0);
+            _gameLogic = new GameLogic((int)boardSize.Value, getGameMode(),blueIsHuman,redIsHuman);
             setBluePlayerInitPlacementType();
             setRedPlayerInitPlacementType();
             updateGameModeDisplay();
@@ -101,7 +114,14 @@ namespace SOS
             winScreen.Visibility = Visibility.Collapsed;
             MainCanvas.Children.Clear();
 
-            //if currentPlayer is a computer call to a method where a computer makes a move
+            if((bool)blueHumanBtn.IsChecked == false && (bool)redHumanBtn.IsChecked == false)
+            {
+                //Auto SOS game method
+            }
+            else if ((bool)blueHumanBtn.IsChecked == false && (bool)redHumanBtn.IsChecked == true)
+            {
+                _gameLogic.computerPlayerMove(ref gameBoardButtons, _gameLogic.bluePlayer, (Color)ColorConverter.ConvertFromString("#FF0D80FF"));
+            }
         }
 
         //Generates a new game board by removing all of the elements of the current
@@ -141,6 +161,7 @@ namespace SOS
                     button.SetValue(Grid.ColumnProperty, i);
                     button.SetValue(Grid.RowProperty, j);
                     gameBoardGrid.Children.Add(button);
+                    gameBoardButtons.Add(button);
                 }
             }
         }
@@ -187,7 +208,7 @@ namespace SOS
         }
 
         //Method to update the playerTurnDisplay variable and display the update on GUI.
-        private void updatePlayerTurnDisplay()
+        public void updatePlayerTurnDisplay()
         {
             if (_gameLogic.CurrentPlayer == "RED")
                 playerTurnDisplay = "Current Turn: Red Player";
@@ -195,7 +216,7 @@ namespace SOS
                 playerTurnDisplay = "Current Turn: Blue Player";
         }
 
-        private void updatePlayerPointsDisplay()
+        public void updatePlayerPointsDisplay()
         {
             redPointsDisplay = $"Points: {_gameLogic.redPlayer.totalPoints}";
             bluePointsDisplay = $"Points: {_gameLogic.bluePlayer.totalPoints}";
