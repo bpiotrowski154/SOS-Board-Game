@@ -8,8 +8,7 @@ namespace GameLogicTests
         [TestMethod]
         public void ValidSOrOPlacement_SimpleGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("SIMPLE");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, true);
 
             Position position1 = new Position(1, 1);
 
@@ -29,8 +28,7 @@ namespace GameLogicTests
         [TestMethod]
         public void InvalidSPlacement_SimpleGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("SIMPLE");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, true);
             gameLogic.generateLogicBoard();
 
             Position position1 = new Position(1, 1);
@@ -53,8 +51,7 @@ namespace GameLogicTests
         [TestMethod]
         public void InvalidOPlacement_SimpleGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("SIMPLE");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, true);
             gameLogic.generateLogicBoard();
 
             Position position1 = new Position(1, 1);
@@ -76,8 +73,7 @@ namespace GameLogicTests
         [TestMethod]
         public void FirstSOSFormed_SimpleGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("SIMPLE");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, true);
             gameLogic.generateLogicBoard();
 
             Position position = new Position(0, 2);
@@ -97,8 +93,7 @@ namespace GameLogicTests
         [TestMethod]
         public void ContinuingGameAfterSorOMove_SimpleGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("SIMPLE");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, true);
             gameLogic.generateLogicBoard();
 
             Position position1 = new Position(0, 2);
@@ -116,8 +111,7 @@ namespace GameLogicTests
         [TestMethod]
         public void DrawGame_SimpleGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("SIMPLE");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, true);
             gameLogic.generateLogicBoard();
 
             Position position1 = new Position(0, 2);
@@ -140,8 +134,7 @@ namespace GameLogicTests
         [TestMethod]
         public void ValidSOrOPlacement_GeneralGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("GENERAL");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "GENERAL", true, true);
 
             Position position1 = new Position(1, 1);
 
@@ -161,8 +154,7 @@ namespace GameLogicTests
         [TestMethod]
         public void InvalidSPlacement_GeneralGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("GENERAL");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "GENERAL", true, true);
             gameLogic.generateLogicBoard();
 
             Position position1 = new Position(1, 1);
@@ -186,8 +178,7 @@ namespace GameLogicTests
         [TestMethod]
         public void InvalidOPlacement_GeneralGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("GENERAL");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "GENERAL", true, true);
             gameLogic.generateLogicBoard();
 
             Position position1 = new Position(1, 1);
@@ -210,8 +201,7 @@ namespace GameLogicTests
         [TestMethod]
         public void ValidSorOPlacementWithSOSFormed_GeneralGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("GENERAL");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "GENERAL", true, true);
             gameLogic.generateLogicBoard();
 
             Position position1 = new Position(0, 2);
@@ -232,8 +222,7 @@ namespace GameLogicTests
         [TestMethod]
         public void BoardBecomesFullAndNotDrawGame_GeneralGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("GENERAL");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "GENERAL", true, true);
             gameLogic.generateLogicBoard();
 
             Position position1 = new Position(0, 2);
@@ -256,8 +245,7 @@ namespace GameLogicTests
         [TestMethod]
         public void ContinuingGameAfterSorOMove_GeneralGame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("GENERAL");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "GENERAL", true, true);
             gameLogic.generateLogicBoard();
 
             Position position = new Position(0, 2);
@@ -277,8 +265,7 @@ namespace GameLogicTests
         [TestMethod]
         public void DrawGame_Generalgame()
         {
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.setGameMode("GENERAL");
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "GENERAL", true, true);
             gameLogic.generateLogicBoard2();
 
             Position position1 = new Position(0, 2);

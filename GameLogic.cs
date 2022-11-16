@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -22,7 +23,7 @@ namespace SOS
             BoardSize = boardSize;
             BoardCount = 0;
             CurrentGameMode = gameMode;
-            WinMessage = "";
+            WinMessage = null;
 
             if (player1Human == true && player2Human == true) //H v H
             {
@@ -85,25 +86,6 @@ namespace SOS
             BoardCount++;
         }
 
-        /*public void updateBoardVariableSize(int boardSize)
-        {
-            if (boardSize != 3)
-            {
-                Board = new CellData[boardSize, boardSize];
-                return;
-            }
-            return;
-        }*/
-        /*public void updateGameMode(string gameMode)
-        {
-            if (CurrentGameMode != gameMode)
-            {
-                CurrentGameMode = gameMode;
-                return;
-            }
-            return;
-        }*/
-
         public void SetNextPlayer()
         {
             if (CurrentPlayer == blue)
@@ -132,6 +114,7 @@ namespace SOS
                     {
                         GameDone = true;
                         WinMessage = CurrentPlayer + " WINS!";
+                        return cases;
                     }
                 }
                 else
@@ -141,6 +124,7 @@ namespace SOS
                     {
                         GameDone = true;
                         WinMessage = CurrentPlayer + " WINS!";
+                        return cases;
                     }
                 }
 
@@ -158,7 +142,7 @@ namespace SOS
                 {
                     cases = checkSPlacement(position);
 
-                    if(CurrentPlayer == blue)
+                    if (CurrentPlayer == blue)
                         bluePlayer.totalPoints += cases.Last();
                     else
                         redPlayer.totalPoints += cases.Last();
@@ -177,7 +161,7 @@ namespace SOS
                 {
                     GameDone = true;
 
-                    if(bluePlayer.totalPoints > redPlayer.totalPoints)
+                    if (bluePlayer.totalPoints > redPlayer.totalPoints)
                         WinMessage = blue + " WINS!";
                     else if (redPlayer.totalPoints > bluePlayer.totalPoints)
                         WinMessage = red + " WINS!";
@@ -190,7 +174,7 @@ namespace SOS
 
         public List<int> checkSPlacement(Position position)
         {
-            List<int> cases= new List<int>();
+            List<int> cases = new List<int>();
             int pointsScored = 0;
 
             for (int i = 0; i < 8; i++)
@@ -267,12 +251,12 @@ namespace SOS
                             break;
                     }
                 }
-                catch(IndexOutOfRangeException e)
+                catch (IndexOutOfRangeException e)
                 {
                     continue;
                 }
             }
-            
+
             cases.Add(pointsScored);
             return cases;
         }
@@ -281,7 +265,7 @@ namespace SOS
         {
             List<int> cases = new List<int>();
             int pointsScored = 0;
-            
+
             for (int i = 0; i < 4; i++)
             {
                 try
@@ -289,7 +273,7 @@ namespace SOS
                     switch (i)
                     {
                         case 0: //Check for S's above and below
-                            if(Board[position.x, position.y - 1].value == "S" && Board[position.x, position.y + 1].value == "S")
+                            if (Board[position.x, position.y - 1].value == "S" && Board[position.x, position.y + 1].value == "S")
                             {
                                 pointsScored++;
                                 cases.Add(8);
@@ -320,190 +304,13 @@ namespace SOS
                             break;
                     }
                 }
-                catch(IndexOutOfRangeException e)
+                catch (IndexOutOfRangeException e)
                 {
                     continue;
                 }
             }
             cases.Add(pointsScored);
             return cases;
-        }
-
-        public void computerPlayerMove(ref List<Button> buttons,Player currentPlayer, Color drawColor)
-        {
-            bool turnOver = false;
-            bool validPlacement = false;
-            List<int> cases = new List<int>();
-            //Check if the first move (board is empty). If so make random move.
-            if (BoardCount == 0)
-            {
-                int i = 0;
-                Random random = new Random();
-                i = random.Next(buttons.Count());
-
-                CellData cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
-                
-                var coordinates = buttons.ElementAt(i).Tag.ToString().Split(',');
-                var xValue = int.Parse(coordinates[0]);
-                var yValue = int.Parse(coordinates[1]);
-                var ButtonPosition = new Position(xValue, yValue);
-                
-                buttons.ElementAt(i).Foreground = currentPlayer.colorValue;
-                buttons.ElementAt(i).Content = currentPlayer.placementType;
-
-                updateBoard(ButtonPosition, cellData);
-                turnOver = true;
-                SetNextPlayer();
-                ((MainWindow)Application.Current.MainWindow).updatePlayerTurnDisplay();
-            }
-            //Check if a winning move can be made
-            //Check if blocking move is possible
-            //make random move
-            else
-            {
-                while(!turnOver)
-                {
-                    int i = 0;
-                    Random random = new Random();
-                    while (!validPlacement)
-                    {
-                        
-                        i = random.Next(buttons.Count());
-                        if (!String.IsNullOrWhiteSpace(buttons.ElementAt(i).Content?.ToString()))
-                            continue;
-                        else
-                            validPlacement = true;
-                    }
-
-                    setRandomPlacementTypeCPU(currentPlayer);
-
-                    CellData cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
-
-                    var coordinates = buttons.ElementAt(i).Tag.ToString().Split(',');
-                    var xValue = int.Parse(coordinates[0]);
-                    var yValue = int.Parse(coordinates[1]);
-                    var ButtonPosition = new Position(xValue, yValue);
-
-                    buttons.ElementAt(i).Foreground = currentPlayer.colorValue;
-                    buttons.ElementAt(i).Content = currentPlayer.placementType;
-
-                    updateBoard(ButtonPosition, cellData);
-
-                    cases = checkForWinOrPoint(CurrentGameMode, cellData, ButtonPosition);
-                    ((MainWindow)Application.Current.MainWindow).DrawCases(cases, drawColor, BoardSize, ButtonPosition);
-                    ((MainWindow)Application.Current.MainWindow).updatePlayerPointsDisplay();
-                
-                    if(GameDone)
-                    {
-                        ((MainWindow)Application.Current.MainWindow).winScreen.Text = WinMessage;
-                        ((MainWindow)Application.Current.MainWindow).winScreen.Visibility = Visibility.Visible;
-                        return;
-                    }
-                    if (CurrentGameMode == "SIMPLE")
-                        turnOver = true;
-                    else if (cases.Count <= 1)
-                        turnOver = true;
-                }
-
-                SetNextPlayer();
-                ((MainWindow)Application.Current.MainWindow).updatePlayerTurnDisplay();
-            }
-        }
-
-        private void setRandomPlacementTypeCPU(Player currentPlayer)
-        {
-            Random rand = new Random();
-            int i = rand.Next(0,2);
-
-            if (i == 0)
-                currentPlayer.placementType = "S";
-            else
-                currentPlayer.placementType = "O";
-        }
-
-        //Test Method usage only
-        public void generateLogicBoard()
-        {
-            CellData[] cellData = new CellData[6];
-            for(int i = 0; i < 6; i++)
-            {
-                if (i % 2 == 0)
-                    cellData[i] = new CellData("S", "BLUE");
-                else
-                    cellData[i] = new CellData("O", "RED"); 
-            }
-            int count = 0;
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 2; j++)
-                {
-                    Board[i, j] = cellData[count];
-                    count++;
-                    BoardCount++;
-                }
-            }
-        }
-
-        public void generateLogicBoard2()
-        {
-            CellData[] cellData = new CellData[6];
-            for (int i = 0; i < 6; i++)
-            {
-                if (i % 2 == 0)
-                    cellData[i] = new CellData("S", "BLUE");
-                else
-                    cellData[i] = new CellData("O", "RED");
-            }
-            int count = 0;
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 2; j++)
-                {
-                    if(i == 1 && j == 1)
-                    {
-                        Board[i, j] = new CellData("S", "RED");
-                        count++;
-                        BoardCount++;
-                    }
-                    else
-                    {
-                        Board[i, j] = cellData[count];
-                        count++;
-                        BoardCount++;
-                    }
-                }
-            }
-        }
-
-        public void setGameMode(string gameMode)
-        {
-            CurrentGameMode = gameMode;
-        }
-
-        public void makeMove(string type, string playerColor, Position position)
-        {
-            if (!String.IsNullOrEmpty(Board[position.x, position.y].value))
-                return;
-            else
-            {
-                CellData cellData = new CellData(type, playerColor);
-                Board[position.x, position.y] = cellData;
-                BoardCount++;
-                List<int> temp = new List<int>();
-                temp = checkForWinOrPoint(CurrentGameMode, cellData, position);
-
-                if (temp.Count > 1 && CurrentGameMode == "GENERAL")
-                    return;
-
-                SetNextPlayer();
-            }
-        }
-
-        public CellData getCellData(Position position)
-        {
-            return Board[position.x, position.y];
         }
     }
 }

@@ -29,7 +29,7 @@ namespace SOS
             InitializeComponent();
         }
 
-        GameLogic _gameLogic = new GameLogic(3, "SIMPLE",true,true);
+        ComputerGameLogic _gameLogic = new ComputerGameLogic(3, "SIMPLE",true,true);
         List<Button> gameBoardButtons = new List<Button>();
         List<int> cases = new List<int>();
 
@@ -58,11 +58,11 @@ namespace SOS
             //gameLogic.cs
             if (_gameLogic.CurrentPlayer == "BLUE")
             {
-                updateCurrentBoardDisplay(_gameLogic.bluePlayer.placementType, _gameLogic.bluePlayer.playerColor, _gameLogic.bluePlayer.colorValue, ref cell, ButtonPosition, (Color)ColorConverter.ConvertFromString("#FF0D80FF"), ref cases);
+                updateCurrentBoardDisplay(_gameLogic.bluePlayer, ref cell, ButtonPosition, (Color)ColorConverter.ConvertFromString("#FF0D80FF"), ref cases);
             }
             else
             {
-                updateCurrentBoardDisplay(_gameLogic.redPlayer.placementType, _gameLogic.redPlayer.playerColor, _gameLogic.redPlayer.colorValue, ref cell, ButtonPosition, Colors.Red, ref cases);
+                updateCurrentBoardDisplay(_gameLogic.redPlayer, ref cell, ButtonPosition, Colors.Red, ref cases);
             }
 
             if (_gameLogic.GameDone == true)
@@ -84,15 +84,15 @@ namespace SOS
             }
             else if (_gameLogic.CurrentPlayer == "RED" && _gameLogic.redPlayer.isComputer == true)
             {
-                //redplayer makes auto move
+                _gameLogic.computerPlayerMove(ref gameBoardButtons, _gameLogic.redPlayer, Colors.Red);
             }
         }
 
-        private void updateCurrentBoardDisplay(string playerPlacementType,string playercolor, Brush colorValue, ref Button cell, Position buttonPosition, Color drawColor, ref List<int> cases)
+        private void updateCurrentBoardDisplay(Player currentPlayer, ref Button cell, Position buttonPosition, Color drawColor, ref List<int> cases)
         {
-            CellData cellData = new CellData(playerPlacementType, playercolor);
-            cell.Foreground = colorValue;
-            cell.Content = playerPlacementType;
+            CellData cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
+            cell.Foreground = currentPlayer.colorValue;
+            cell.Content = currentPlayer.placementType;
             _gameLogic.updateBoard(buttonPosition, cellData);
             cases = _gameLogic.checkForWinOrPoint(_gameLogic.CurrentGameMode, cellData, buttonPosition);
             DrawCases(cases, drawColor, (int)boardSize.Value, buttonPosition);
@@ -105,7 +105,16 @@ namespace SOS
             bool blueIsHuman = (bool)blueHumanBtn.IsChecked;
             bool redIsHuman = (bool)redHumanBtn.IsChecked;
             generateNewGameBoard();
-            _gameLogic = new GameLogic((int)boardSize.Value, getGameMode(),blueIsHuman,redIsHuman);
+
+            if(blueIsHuman == true && redIsHuman == true)
+            {
+                _gameLogic = new ComputerGameLogic((int)boardSize.Value, getGameMode(),blueIsHuman,redIsHuman);
+            }
+            else
+            {
+                _gameLogic = new ComputerGameLogic((int)boardSize.Value, getGameMode(), blueIsHuman, redIsHuman);
+            }
+
             setBluePlayerInitPlacementType();
             setRedPlayerInitPlacementType();
             updateGameModeDisplay();
@@ -116,7 +125,7 @@ namespace SOS
 
             if((bool)blueHumanBtn.IsChecked == false && (bool)redHumanBtn.IsChecked == false)
             {
-                //Auto SOS game method
+                _gameLogic.automaticSOSGame(ref gameBoardButtons);
             }
             else if ((bool)blueHumanBtn.IsChecked == false && (bool)redHumanBtn.IsChecked == true)
             {

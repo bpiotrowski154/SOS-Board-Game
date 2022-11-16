@@ -15,6 +15,5 @@ namespace SOS
         }
         public string value { get; set; }
         public string colorOfPlayer { get; set; }
-
     }
 }
