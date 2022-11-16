@@ -149,7 +149,7 @@ namespace SOS
 
                         updateBoard(winMovePosition, cellData);
 
-                        cases = checkForWinOrPoint(CurrentGameMode, cellData, winMovePosition);
+                        cases = checkForWinOrPoint(cellData, winMovePosition);
                         ((MainWindow)Application.Current.MainWindow).DrawCases(cases, drawColor, BoardSize, winMovePosition);
                         ((MainWindow)Application.Current.MainWindow).updatePlayerPointsDisplay();
 
@@ -191,7 +191,7 @@ namespace SOS
                         updateBoard(ButtonPosition, cellData);
 
                         //Check if a point was scored
-                        cases = checkForWinOrPoint(CurrentGameMode, cellData, ButtonPosition);
+                        cases = checkForWinOrPoint(cellData, ButtonPosition);
                         ((MainWindow)Application.Current.MainWindow).DrawCases(cases, drawColor, BoardSize, ButtonPosition);
                         ((MainWindow)Application.Current.MainWindow).updatePlayerPointsDisplay();
 

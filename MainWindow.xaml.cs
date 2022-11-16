@@ -94,7 +94,7 @@ namespace SOS
             cell.Foreground = currentPlayer.colorValue;
             cell.Content = currentPlayer.placementType;
             _gameLogic.updateBoard(buttonPosition, cellData);
-            cases = _gameLogic.checkForWinOrPoint(_gameLogic.CurrentGameMode, cellData, buttonPosition);
+            cases = _gameLogic.checkForWinOrPoint(cellData, buttonPosition);
             DrawCases(cases, drawColor, (int)boardSize.Value, buttonPosition);
             updatePlayerPointsDisplay();
         }

@@ -102,10 +102,10 @@ namespace SOS
                 redPlayer.placementType = value;
         }
 
-        public List<int> checkForWinOrPoint(string gameMode, CellData playerInfo, Position position)
+        public List<int> checkForWinOrPoint(CellData playerInfo, Position position)
         {
             List<int> cases = new List<int>();
-            if (gameMode == simple)
+            if (CurrentGameMode == simple)
             {
                 if (playerInfo.value == "S")
                 {
@@ -117,7 +117,7 @@ namespace SOS
                         return cases;
                     }
                 }
-                else
+                else 
                 {
                     cases = checkOPlacement(position);
                     if (cases.Last() > 0)
