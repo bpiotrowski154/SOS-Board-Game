@@ -128,7 +128,7 @@ namespace SOS
                     }
                 }
 
-                if (Board.Length == BoardCount) //If the no player scored a point and teh Board is full the game is over and its a draw
+                if (Board.Length == BoardCount) //If no player scored a point and the Board is full the game is over and its a draw
                 {
                     GameDone = true;
                     WinMessage = "DRAW";
@@ -138,28 +138,26 @@ namespace SOS
             }
             else
             {
-                if (playerInfo.value == "S")
+                if (playerInfo.value == "S") //If game mode is general and the player placed an S
                 {
-                    cases = checkSPlacement(position);
-
+                    cases = checkSPlacement(position); //Check if any points were made from the placement
                     if (CurrentPlayer == blue)
-                        bluePlayer.totalPoints += cases.Last();
+                        bluePlayer.totalPoints += cases.Last(); //Add total number of points scored from move for blue player
                     else
-                        redPlayer.totalPoints += cases.Last();
+                        redPlayer.totalPoints += cases.Last(); //Add total number of points scored from move for red player
                 }
-                else
+                else //If game mode is general and the player placed an O
                 {
-                    cases = checkOPlacement(position);
-
+                    cases = checkOPlacement(position); //Check if any points were made from the placement
                     if (CurrentPlayer == blue)
-                        bluePlayer.totalPoints += cases.Last();
+                        bluePlayer.totalPoints += cases.Last(); //Add total number of points scored from move for blue player
                     else
-                        redPlayer.totalPoints += cases.Last();
+                        redPlayer.totalPoints += cases.Last(); //Add total number of points scored from move for red player
                 }
 
-                if (Board.Length == BoardCount)
+                if (Board.Length == BoardCount) 
                 {
-                    GameDone = true;
+                    GameDone = true; //If the board is full the game is over and the winner is whoever has the most points
 
                     if (bluePlayer.totalPoints > redPlayer.totalPoints)
                         WinMessage = blue + " WINS!";

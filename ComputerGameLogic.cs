@@ -41,53 +41,37 @@ namespace SOS
             Position tempPosition = new Position(0, 0);
             List<int> cases = new List<int>();
             CellData[,] testBoard = new CellData[BoardSize, BoardSize];
-            currentPlayer.placementType = "S";
-            CellData cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
+            
+            CellData cellData;
             for (int i = 0; i < BoardSize; i++)
             {
                 for (int j = 0; j < BoardSize; j++)
                 {
-                    testBoard = Board.Clone() as CellData[,];
-
-                    tempPosition = new Position(i, j);
-                    if (testBoard[i, j].value != null)
-                    {
+                    if (testBoard[i, j].value != null)                                                      //If the current cell is already occupied, skip to the next loop iteration
                         continue;
-                    }
-                    else
-                    {
-                        testBoard[i, j] = cellData;
-                        cases = checkForPointCPUMove(CurrentGameMode, cellData, tempPosition);
-                        if (cases.Last() > 0)
-                        {
-                            winPosition = new Position(i, j);
-                            return true;
-                        }
-                    }
-                }
-            }
-            currentPlayer.placementType = "O";
-            cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
-            for (int i = 0; i < BoardSize; i++)
-            {
-                for (int j = 0; j < BoardSize; j++)
-                {
-                    testBoard = Board.Clone() as CellData[,];
+                    tempPosition = new Position(i, j);                                                      //Set temp position to current loop iteration
 
-                    tempPosition = new Position(i, j);
-                    if (Board[i, j].value != null)
+                    currentPlayer.placementType = "S";                                                      //Update the currentPlayers placement type to be S to test if S is a winning move in the current cell
+                    cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor); 
+                    testBoard = Board.Clone() as CellData[,];                                               //Deep copy the Board variable to create a testingBoard without affecting actual Board
+                    testBoard[i, j] = cellData;                                                             //Make move as S
+                    cases = checkForPointCPUMove(CurrentGameMode, cellData, tempPosition);                  //Determing if point was made
+                    if (cases.Last() > 0)
                     {
-                        continue;
+                        winPosition = new Position(i, j);
+                        return true;
                     }
-                    else
+
+                    cases.Clear(); 
+                    currentPlayer.placementType = "O";                                                      //Update the currentPlayers placement type to be O to test if O is a winning move in the current cell
+                    cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
+                    testBoard = Board.Clone() as CellData[,];                                               //Reset the testing board
+                    testBoard[i, j] = cellData;                                                             //Make move as O
+                    cases = checkForPointCPUMove(CurrentGameMode, cellData, tempPosition);                  //Determine if point was made
+                    if(cases.Last() > 0)
                     {
-                        testBoard[i, j] = cellData;
-                        cases = checkForPointCPUMove(CurrentGameMode, cellData, tempPosition);
-                        if (cases.Last() > 0)
-                        {
-                            winPosition = new Position(i, j);
-                            return true;
-                        }
+                        winPosition = new Position(i, j);
+                        return true;
                     }
                 }
             }

@@ -76,7 +76,7 @@ namespace SOS
                 Board[position.x, position.y] = cellData;
                 BoardCount++;
                 List<int> temp = new List<int>();
-                temp = checkForWinOrPoint(CurrentGameMode, cellData, position);
+                temp = checkForWinOrPoint(cellData, position);
 
                 if (temp.Count > 1 && CurrentGameMode == "GENERAL")
                     return;
