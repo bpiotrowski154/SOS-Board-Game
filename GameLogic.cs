@@ -107,20 +107,20 @@ namespace SOS
             List<int> cases = new List<int>();
             if (CurrentGameMode == simple)
             {
-                if (playerInfo.value == "S")
+                if (playerInfo.value == "S") //If game mode is simple and the player placed an S
                 {
-                    cases = checkSPlacement(position);
-                    if (cases.Last() > 0)
+                    cases = checkSPlacement(position); //Check if any points were made from the placement
+                    if (cases.Last() > 0) //If a point was made the Game is over and the Current player wins
                     {
                         GameDone = true;
                         WinMessage = CurrentPlayer + " WINS!";
                         return cases;
                     }
                 }
-                else 
+                else //If game mode is simple and the player placed an O
                 {
-                    cases = checkOPlacement(position);
-                    if (cases.Last() > 0)
+                    cases = checkOPlacement(position); //Check if any points were made from the placement
+                    if (cases.Last() > 0) //If a point was made the Game is over and the current player win
                     {
                         GameDone = true;
                         WinMessage = CurrentPlayer + " WINS!";
@@ -128,7 +128,7 @@ namespace SOS
                     }
                 }
 
-                if (Board.Length == BoardCount)
+                if (Board.Length == BoardCount) //If the no player scored a point and teh Board is full the game is over and its a draw
                 {
                     GameDone = true;
                     WinMessage = "DRAW";
