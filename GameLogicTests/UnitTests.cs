@@ -1,4 +1,6 @@
 using SOS;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Permissions;
 
 namespace GameLogicTests
 {
@@ -283,6 +285,143 @@ namespace GameLogicTests
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.AreEqual(expectedWinMessage, actualWinMessage);
+        }
+
+        [TestMethod]
+        public void FirstMoveByComputerPlayer()
+        {
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", false, true);
+            gameLogic.computerPlayerMakesMove(gameLogic.bluePlayer);
+
+            bool expectedGameDone = false;
+            bool actualGameDone = gameLogic.GameDone;
+            int expectedBoardCount = 1;
+            int actualBoardCount = gameLogic.BoardCount;
+            string expectedCurrentPlayer = "RED";
+            string actualCurrentPlayer = gameLogic.CurrentPlayer;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreEqual(expectedBoardCount, actualBoardCount);
+            Assert.AreEqual(expectedCurrentPlayer, actualCurrentPlayer);
+        }
+
+        [TestMethod]
+        public void SecondMoveByComputerPlayer()
+        {
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, false);
+            Position position1 = new Position(0, 2);
+
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
+            gameLogic.computerPlayerMakesMove(gameLogic.redPlayer);
+
+            bool expectedAttemptedWinMove = false;
+            bool actualAttemptedWinMove = gameLogic.winMovePossible;
+            bool expectedGameDone = false;
+            bool actualGameDone = gameLogic.GameDone;
+            string expectedCurrentPlayer = "BLUE";
+            string actualCurrentPlayer = gameLogic.CurrentPlayer;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreEqual(expectedAttemptedWinMove, actualAttemptedWinMove);
+            Assert.AreEqual(expectedCurrentPlayer, actualCurrentPlayer);
+
+        }
+        [TestMethod]
+        public void RandomMoveByComputerPlayer()
+        {
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, false);
+            Position position1 = new Position(1, 1);
+
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
+            gameLogic.computerPlayerMakesMove(gameLogic.redPlayer);
+
+            bool expectedMadeRandomMove = true;
+            bool actualMadeRandomMove = gameLogic.madeRandomMove;
+            bool expectedGameDone = false;
+            bool actualGameDone = gameLogic.GameDone;
+            string expectedCurrentPlayer = "BLUE";
+            string actualCurrentPlayer = gameLogic.CurrentPlayer;
+            bool expectedAttemptedWinMove = false;
+            bool actualAttemptedWinMove = gameLogic.winMovePossible;
+
+            Assert.AreEqual(expectedMadeRandomMove, actualMadeRandomMove);
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreEqual(expectedCurrentPlayer, actualCurrentPlayer);
+            Assert.AreEqual(expectedAttemptedWinMove, actualAttemptedWinMove);
+        }
+
+        [TestMethod]
+        public void WinningMoveByComputerPlayer_SimpleGame()
+        {
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, false);
+            Position position1 = new Position(1, 1);
+            Position position2 = new Position(2, 1);
+            Position position3 = new Position(0,0);
+
+            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position3);
+            gameLogic.computerPlayerMakesMove(gameLogic.redPlayer);
+
+            bool expectedAttemptedWinMove = true;
+            bool actualAttemptedWinMove = gameLogic.winMovePossible;
+            bool expectedGameDone = true;
+            bool actualGameDone = gameLogic.GameDone;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreEqual(expectedAttemptedWinMove, actualAttemptedWinMove);
+        }
+
+        [TestMethod]
+        public void WinningMoveOrPointScoredByComputerPlayer_GeneralGame()
+        {
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "GENERAL", true, false);
+            Position position1 = new Position(1, 1);
+            Position position2 = new Position(2, 1);
+            Position position3 = new Position(0, 0);
+
+            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
+            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position3);
+            gameLogic.computerPlayerMakesMove(gameLogic.redPlayer);
+
+            bool expectedAttemptedWinMove = true;
+            bool actualAttemptedWinMove = gameLogic.winMovePossible;
+            bool expectedGameDone = false;
+            bool actualGameDone = gameLogic.GameDone;
+            int numTurnsPlayedByComputer = gameLogic.numTurns;
+            string expectedCurrentPlayer = "BLUE";
+            string actualCurrentPlaeyr = gameLogic.CurrentPlayer;
+
+            Assert.AreEqual(expectedAttemptedWinMove, actualAttemptedWinMove);
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreNotEqual(numTurnsPlayedByComputer, 1);
+            Assert.AreEqual(expectedCurrentPlayer, actualCurrentPlaeyr);
+        }
+
+        [TestMethod]
+        public void BothPlayersAreComputerPlayers_SimpleGame()
+        {
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", false, false);
+            gameLogic.automaticSOSTestGame();
+
+            bool expectedGameDone = true;
+            bool actualGameDone = gameLogic.GameDone;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+        }
+        public void BothPlayersAreComputerPlayers_GeneralGame()
+        {
+            TestingGameLogic gameLogic = new TestingGameLogic(3, "GENERAL", false, false);
+            gameLogic.automaticSOSTestGame();
+
+            bool expectedGameDone = true;
+            bool actualGameDone = true;
+            int expectedBoardCount = 9;
+            int actualBoardCount = gameLogic.BoardCount;
+
+            Assert.AreEqual(expectedGameDone, actualGameDone);
+            Assert.AreEqual(expectedBoardCount, actualBoardCount);
         }
     }
 }

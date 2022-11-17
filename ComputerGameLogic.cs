@@ -47,13 +47,14 @@ namespace SOS
             {
                 for (int j = 0; j < BoardSize; j++)
                 {
+                    testBoard = Board.Clone() as CellData[,]; 
                     if (testBoard[i, j].value != null)                                                      //If the current cell is already occupied, skip to the next loop iteration
                         continue;
                     tempPosition = new Position(i, j);                                                      //Set temp position to current loop iteration
 
                     currentPlayer.placementType = "S";                                                      //Update the currentPlayers placement type to be S to test if S is a winning move in the current cell
                     cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor); 
-                    testBoard = Board.Clone() as CellData[,];                                               //Deep copy the Board variable to create a testingBoard without affecting actual Board
+                                                                  //Deep copy the Board variable to create a testingBoard without affecting actual Board
                     testBoard[i, j] = cellData;                                                             //Make move as S
                     cases = checkForPointCPUMove(CurrentGameMode, cellData, tempPosition);                  //Determing if point was made
                     if (cases.Last() > 0)
@@ -133,6 +134,7 @@ namespace SOS
 
                         updateBoard(winMovePosition, cellData);
 
+                        cases.Clear();
                         cases = checkForWinOrPoint(cellData, winMovePosition);
                         ((MainWindow)Application.Current.MainWindow).DrawCases(cases, drawColor, BoardSize, winMovePosition);
                         ((MainWindow)Application.Current.MainWindow).updatePlayerPointsDisplay();
@@ -175,6 +177,7 @@ namespace SOS
                         updateBoard(ButtonPosition, cellData);
 
                         //Check if a point was scored
+                        cases.Clear();
                         cases = checkForWinOrPoint(cellData, ButtonPosition);
                         ((MainWindow)Application.Current.MainWindow).DrawCases(cases, drawColor, BoardSize, ButtonPosition);
                         ((MainWindow)Application.Current.MainWindow).updatePlayerPointsDisplay();
@@ -194,7 +197,7 @@ namespace SOS
             SetNextPlayer();
             ((MainWindow)Application.Current.MainWindow).updatePlayerTurnDisplay();
         }
-        private void setRandomPlacementTypeCPU(Player currentPlayer)
+        protected void setRandomPlacementTypeCPU(Player currentPlayer)
         {
             Random rand = new Random();
             int i = rand.Next(0, 2);

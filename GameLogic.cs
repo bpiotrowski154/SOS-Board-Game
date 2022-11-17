@@ -112,6 +112,10 @@ namespace SOS
                     cases = checkSPlacement(position); //Check if any points were made from the placement
                     if (cases.Last() > 0) //If a point was made the Game is over and the Current player wins
                     {
+                        if (CurrentPlayer == blue)
+                            bluePlayer.totalPoints += cases.Last();
+                        else
+                            redPlayer.totalPoints += cases.Last();
                         GameDone = true;
                         WinMessage = CurrentPlayer + " WINS!";
                         return cases;
@@ -122,6 +126,10 @@ namespace SOS
                     cases = checkOPlacement(position); //Check if any points were made from the placement
                     if (cases.Last() > 0) //If a point was made the Game is over and the current player win
                     {
+                        if (CurrentPlayer == blue)
+                            bluePlayer.totalPoints += cases.Last();
+                        else
+                            redPlayer.totalPoints += cases.Last();
                         GameDone = true;
                         WinMessage = CurrentPlayer + " WINS!";
                         return cases;
