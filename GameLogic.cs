@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using System.IO;
 
 namespace SOS
 {
@@ -80,10 +81,15 @@ namespace SOS
         public int BoardSize;
         public bool GameDone = false;
 
+        private List<string> gameRecording = new List<string>();
+
         public void updateBoard(Position position, CellData value)
         {
             Board[position.x, position.y] = value;
             BoardCount++;
+
+            string previousMove = $"{value.colorOfPlayer.ToUpper()} player placed {value.value} at ({position.x},{position.y})";
+            gameRecording.Add(previousMove);
         }
 
         public void SetNextPlayer()
@@ -118,6 +124,9 @@ namespace SOS
                             redPlayer.totalPoints += cases.Last();
                         GameDone = true;
                         WinMessage = CurrentPlayer + " WINS!";
+
+                        File.WriteAllLines("GameRecording.txt", gameRecording.ToArray());
+
                         return cases;
                     }
                 }
@@ -132,6 +141,9 @@ namespace SOS
                             redPlayer.totalPoints += cases.Last();
                         GameDone = true;
                         WinMessage = CurrentPlayer + " WINS!";
+
+                        File.WriteAllLines("GameRecording.txt", gameRecording.ToArray());
+
                         return cases;
                     }
                 }
@@ -139,6 +151,7 @@ namespace SOS
                 if (Board.Length == BoardCount) //If no player scored a point and the Board is full the game is over and its a draw
                 {
                     GameDone = true;
+                    File.WriteAllLines("GameRecording.txt", gameRecording.ToArray());
                     WinMessage = "DRAW";
                 }
 
@@ -173,6 +186,8 @@ namespace SOS
                         WinMessage = red + " WINS!";
                     else
                         WinMessage = "DRAW";
+
+                    File.WriteAllLines("GameRecording.txt", gameRecording.ToArray());
                 }
                 return cases;
             }
