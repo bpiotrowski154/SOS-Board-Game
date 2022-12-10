@@ -17,9 +17,9 @@ namespace SOS
 
         public void automaticSOSGame(ref List<Button> buttons)
         {
-            while (!GameDone)
+            while (!gameDone)
             {
-                if (CurrentPlayer == "BLUE")
+                if (currentPlayer == "BLUE")
                     computerPlayerMove(ref buttons, bluePlayer, (Color)ColorConverter.ConvertFromString("#FF0D80FF"));
                 else
                     computerPlayerMove(ref buttons, redPlayer, Colors.Red);
@@ -40,14 +40,14 @@ namespace SOS
         {
             Position tempPosition = new Position(0, 0);
             List<int> cases = new List<int>();
-            CellData[,] testBoard = new CellData[BoardSize, BoardSize];
+            CellData[,] testBoard = new CellData[boardSize, boardSize];
             
             CellData cellData;
-            for (int i = 0; i < BoardSize; i++)
+            for (int i = 0; i < boardSize; i++)
             {
-                for (int j = 0; j < BoardSize; j++)
+                for (int j = 0; j < boardSize; j++)
                 {
-                    testBoard = Board.Clone() as CellData[,]; 
+                    testBoard = board.Clone() as CellData[,]; 
                     if (testBoard[i, j].value != null)                                                      //If the current cell is already occupied, skip to the next loop iteration
                         continue;
                     tempPosition = new Position(i, j);                                                      //Set temp position to current loop iteration
@@ -56,7 +56,7 @@ namespace SOS
                     cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor); 
                                                                   //Deep copy the Board variable to create a testingBoard without affecting actual Board
                     testBoard[i, j] = cellData;                                                             //Make move as S
-                    cases = checkForPointCPUMove(CurrentGameMode, cellData, tempPosition);                  //Determing if point was made
+                    cases = checkForPointCPUMove(currentGameMode, cellData, tempPosition);                  //Determing if point was made
                     if (cases.Last() > 0)
                     {
                         winPosition = new Position(i, j);
@@ -66,9 +66,9 @@ namespace SOS
                     cases.Clear(); 
                     currentPlayer.placementType = "O";                                                      //Update the currentPlayers placement type to be O to test if O is a winning move in the current cell
                     cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
-                    testBoard = Board.Clone() as CellData[,];                                               //Reset the testing board
+                    testBoard = board.Clone() as CellData[,];                                               //Reset the testing board
                     testBoard[i, j] = cellData;                                                             //Make move as O
-                    cases = checkForPointCPUMove(CurrentGameMode, cellData, tempPosition);                  //Determine if point was made
+                    cases = checkForPointCPUMove(currentGameMode, cellData, tempPosition);                  //Determine if point was made
                     if(cases.Last() > 0)
                     {
                         winPosition = new Position(i, j);
@@ -86,7 +86,7 @@ namespace SOS
             List<int> cases = new List<int>();
             Position winMovePosition = new Position(0, 0);
             //Check if the first move (board is empty). If so make random move.
-            if (BoardCount == 0)
+            if (boardCount == 0)
             {
                 int i = 0;
                 Random random = new Random();
@@ -116,9 +116,9 @@ namespace SOS
                     {
                         CellData cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
                         int count = -1;
-                        for (int i = 0; i < BoardSize; i++)
+                        for (int i = 0; i < boardSize; i++)
                         {
-                            for (int j = 0; j < BoardSize; j++)
+                            for (int j = 0; j < boardSize; j++)
                             {
                                 count++;
                                 if (i == winMovePosition.x && j == winMovePosition.y)
@@ -136,12 +136,12 @@ namespace SOS
 
                         cases.Clear();
                         cases = checkForWinOrPoint(cellData, winMovePosition);
-                        ((MainWindow)Application.Current.MainWindow).DrawCases(cases, drawColor, BoardSize, winMovePosition);
+                        ((MainWindow)Application.Current.MainWindow).DrawCases(cases, drawColor, boardSize, winMovePosition);
                         ((MainWindow)Application.Current.MainWindow).updatePlayerPointsDisplay();
 
-                        if (GameDone)
+                        if (gameDone)
                         {
-                            ((MainWindow)Application.Current.MainWindow).winScreen.Text = WinMessage;
+                            ((MainWindow)Application.Current.MainWindow).winScreen.Text = winMessage;
                             ((MainWindow)Application.Current.MainWindow).winScreen.Visibility = Visibility.Visible;
                             return;
                         }
@@ -179,18 +179,18 @@ namespace SOS
                         //Check if a point was scored
                         cases.Clear();
                         cases = checkForWinOrPoint(cellData, ButtonPosition);
-                        ((MainWindow)Application.Current.MainWindow).DrawCases(cases, drawColor, BoardSize, ButtonPosition);
+                        ((MainWindow)Application.Current.MainWindow).DrawCases(cases, drawColor, boardSize, ButtonPosition);
                         ((MainWindow)Application.Current.MainWindow).updatePlayerPointsDisplay();
 
                         //If game is done display winner message
-                        if (GameDone)
+                        if (gameDone)
                         {
-                            ((MainWindow)Application.Current.MainWindow).winScreen.Text = WinMessage;
+                            ((MainWindow)Application.Current.MainWindow).winScreen.Text = winMessage;
                             ((MainWindow)Application.Current.MainWindow).winScreen.Visibility = Visibility.Visible;
                             return;
                         }
                     }
-                    if (CurrentGameMode == "SIMPLE" || cases.Count <= 1)
+                    if (currentGameMode == "SIMPLE" || cases.Count <= 1)
                         turnOver = true;
                 }
             }

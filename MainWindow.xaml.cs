@@ -33,17 +33,17 @@ namespace SOS
         List<Button> gameBoardButtons = new List<Button>();
         List<int> cases = new List<int>();
 
+        //Method that determines what happens whenever a cell is clicked on the GUI
         private void PlayerClicksCell(object sender, RoutedEventArgs e)
         {
             var cell = (Button)sender;
-            //List<int> cases = new List<int>();
 
             //Checks if current cell is already occupied by an S or O or if it is the new game button
             if (!String.IsNullOrWhiteSpace(cell.Content?.ToString()))
                 return;
 
             //Checks if the game has already been won to prevent placement of more S's or O's
-            if (_gameLogic.GameDone)
+            if (_gameLogic.gameDone)
                 return;
 
             //Creates a coordinate value and assigns it to a position parameter
@@ -56,7 +56,7 @@ namespace SOS
             //Checks the current player and displays what goes into the current button based on
             //the color of the player and the placement type, then updates the board variable in
             //gameLogic.cs
-            if (_gameLogic.CurrentPlayer == "BLUE")
+            if (_gameLogic.currentPlayer == "BLUE")
             {
                 updateCurrentBoardDisplay(_gameLogic.bluePlayer, ref cell, ButtonPosition, (Color)ColorConverter.ConvertFromString("#FF0D80FF"), ref cases);
             }
@@ -65,29 +65,30 @@ namespace SOS
                 updateCurrentBoardDisplay(_gameLogic.redPlayer, ref cell, ButtonPosition, Colors.Red, ref cases);
             }
 
-            if (_gameLogic.GameDone == true)
+            if (_gameLogic.gameDone == true)
             {
-                winScreen.Text = _gameLogic.WinMessage;
+                winScreen.Text = _gameLogic.winMessage;
                 winScreen.Visibility = Visibility.Visible;
                 return;
             }
 
-            if (cases.Count > 1 && _gameLogic.CurrentGameMode == "GENERAL")
+            if (cases.Count > 1 && _gameLogic.currentGameMode == "GENERAL")
                 return;
 
             _gameLogic.SetNextPlayer();
             updatePlayerTurnDisplay();
 
-            if (_gameLogic.CurrentPlayer == "BLUE" && _gameLogic.bluePlayer.isComputer == true)
+            if (_gameLogic.currentPlayer == "BLUE" && _gameLogic.bluePlayer.isComputer == true)
             {
                 _gameLogic.computerPlayerMove(ref gameBoardButtons, _gameLogic.bluePlayer, (Color)ColorConverter.ConvertFromString("#FF0D80FF"));
             }
-            else if (_gameLogic.CurrentPlayer == "RED" && _gameLogic.redPlayer.isComputer == true)
+            else if (_gameLogic.currentPlayer == "RED" && _gameLogic.redPlayer.isComputer == true)
             {
                 _gameLogic.computerPlayerMove(ref gameBoardButtons, _gameLogic.redPlayer, Colors.Red);
             }
         }
 
+        //Method that updates everything on the game board
         private void updateCurrentBoardDisplay(Player currentPlayer, ref Button cell, Position buttonPosition, Color drawColor, ref List<int> cases)
         {
             CellData cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
@@ -99,6 +100,7 @@ namespace SOS
             updatePlayerPointsDisplay();
         }
 
+        //Method that starts a new game whenever the new game button is clicked.
         private void newGameBtn_Clicked(object sender, RoutedEventArgs e)
         {
             gameBoardButtons.Clear();
@@ -219,12 +221,13 @@ namespace SOS
         //Method to update the playerTurnDisplay variable and display the update on GUI.
         public void updatePlayerTurnDisplay()
         {
-            if (_gameLogic.CurrentPlayer == "RED")
+            if (_gameLogic.currentPlayer == "RED")
                 playerTurnDisplay = "Current Turn: Red Player";
             else
                 playerTurnDisplay = "Current Turn: Blue Player";
         }
 
+        //Method to update the redPointsDisplay and bluePointsDisplay variables and display the update on GUI
         public void updatePlayerPointsDisplay()
         {
             redPointsDisplay = $"Points: {_gameLogic.redPlayer.totalPoints}";
@@ -248,6 +251,8 @@ namespace SOS
             else
                 _gameLogic.updatePlayerPlacementType("BLUE", "O");
         }
+
+        //Method to update the initial placement type of the blue player when the game starts
         private void setBluePlayerInitPlacementType()
         {
             if (blueSBtn.IsChecked == true)
@@ -264,6 +269,8 @@ namespace SOS
             else
                 _gameLogic.updatePlayerPlacementType("RED", "O");
         }
+
+        //Method to update the inital placement type of the blue player when the game starts
         private void setRedPlayerInitPlacementType()
         {
             if (redSBtn.IsChecked == true)
@@ -272,6 +279,8 @@ namespace SOS
                 _gameLogic.updatePlayerPlacementType("RED", "O");
         }
 
+        //Method that takes in all of the different point cases that the player made. For example getting two points in one move
+        //then two lines would need to be drawn.
         public void DrawCases(List<int> cases, Color color, int boardSize, Position position)
         {
             if (cases.Count == 1)
@@ -333,6 +342,8 @@ namespace SOS
             }
         }
 
+
+        //Draws a line on the game board when given the coordinates of the start and end of the line, as well as the color
         public void DrawLine(int x1, int y1, int x2, int y2, Color color)
         {
             Line line = new Line();

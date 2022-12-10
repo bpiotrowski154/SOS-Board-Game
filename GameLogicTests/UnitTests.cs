@@ -14,14 +14,14 @@ namespace GameLogicTests
 
             Position position1 = new Position(1, 1);
 
-            string initialPlayer = gameLogic.CurrentPlayer;
+            string initialPlayer = gameLogic.currentPlayer;
 
             gameLogic.makeMove("S", initialPlayer, position1);
 
             CellData expectedCellData = new CellData("S", initialPlayer);
-            CellData actualCellData = gameLogic.Board[position1.x, position1.y];
+            CellData actualCellData = gameLogic.board[position1.x, position1.y];
             string expectedPlayer = "RED";
-            string actualPlayer = gameLogic.CurrentPlayer;
+            string actualPlayer = gameLogic.currentPlayer;
 
             Assert.AreEqual(expectedCellData, actualCellData);
             Assert.AreEqual(expectedPlayer, actualPlayer);
@@ -36,14 +36,14 @@ namespace GameLogicTests
             Position position1 = new Position(1, 1);
             Position position2 = new Position(2, 1);
 
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position2);
 
-            CellData expectedCellData = new CellData("S", gameLogic.CurrentPlayer);
-            CellData actualCellData1 = gameLogic.Board[position1.x, position1.y];
-            CellData actualCellData2 = gameLogic.Board[position2.x, position2.y];
+            CellData expectedCellData = new CellData("S", gameLogic.currentPlayer);
+            CellData actualCellData1 = gameLogic.board[position1.x, position1.y];
+            CellData actualCellData2 = gameLogic.board[position2.x, position2.y];
             string expectedPlayer = "BLUE";
-            string actualPlayer = gameLogic.CurrentPlayer;
+            string actualPlayer = gameLogic.currentPlayer;
 
             Assert.AreNotEqual(expectedCellData, actualCellData1);
             Assert.AreNotEqual(expectedCellData, actualCellData2);
@@ -59,14 +59,14 @@ namespace GameLogicTests
             Position position1 = new Position(1, 1);
             Position position2 = new Position(2, 1);
 
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position2);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position1);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position2);
 
-            CellData expectedCellData = new CellData("O", gameLogic.CurrentPlayer);
-            CellData actualCellData1 = gameLogic.Board[position1.x, position1.y];
-            CellData actualCellData2 = gameLogic.Board[position2.x, position2.y];
+            CellData expectedCellData = new CellData("O", gameLogic.currentPlayer);
+            CellData actualCellData1 = gameLogic.board[position1.x, position1.y];
+            CellData actualCellData2 = gameLogic.board[position2.x, position2.y];
             string expectedPlayer = "BLUE";
-            string actualPlayer = gameLogic.CurrentPlayer;
+            string actualPlayer = gameLogic.currentPlayer;
 
             Assert.AreNotEqual(expectedCellData, actualCellData1);
             Assert.AreNotEqual(expectedCellData, actualCellData2);
@@ -80,12 +80,12 @@ namespace GameLogicTests
 
             Position position = new Position(0, 2);
 
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position);
 
             bool expectedGameDone = true;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
             string expectedWinner = "BLUE WINS!";
-            string actualWinner = gameLogic.WinMessage;
+            string actualWinner = gameLogic.winMessage;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.AreEqual(expectedWinner, actualWinner);
@@ -100,11 +100,11 @@ namespace GameLogicTests
 
             Position position1 = new Position(0, 2);
 
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position1);
 
             bool expectedGameDone = false;
-            bool actualGameDone = gameLogic.GameDone;
-            string actualWinner = gameLogic.WinMessage;
+            bool actualGameDone = gameLogic.gameDone;
+            string actualWinner = gameLogic.winMessage;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.IsNull(actualWinner);
@@ -120,14 +120,14 @@ namespace GameLogicTests
             Position position2 = new Position(1, 2);
             Position position3 = new Position(2, 2);
             
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position2);
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position3);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position1);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position2);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position3);
 
             bool expectedGameDone = true;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
             string expectedWinner = "DRAW";
-            string actualWinner = gameLogic.WinMessage;
+            string actualWinner = gameLogic.winMessage;
 
             Assert.AreEqual(expectedWinner, actualWinner);
             Assert.AreEqual(expectedGameDone, actualGameDone);
@@ -140,14 +140,14 @@ namespace GameLogicTests
 
             Position position1 = new Position(1, 1);
 
-            string initialPlayer = gameLogic.CurrentPlayer;
+            string initialPlayer = gameLogic.currentPlayer;
 
             gameLogic.makeMove("S", initialPlayer, position1);
 
             CellData expectedCellData = new CellData("S", initialPlayer);
-            CellData actual = gameLogic.Board[position1.x, position1.y];
+            CellData actual = gameLogic.board[position1.x, position1.y];
             string expectedPlayer = "RED";
-            string actualPlayer = gameLogic.CurrentPlayer;
+            string actualPlayer = gameLogic.currentPlayer;
 
             Assert.AreEqual(expectedCellData, actual);
             Assert.AreEqual(expectedPlayer, actualPlayer);
@@ -162,14 +162,14 @@ namespace GameLogicTests
             Position position1 = new Position(1, 1);
             Position position2 = new Position(2, 1);
 
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position2);
 
-            CellData expectedCellData = new CellData("S", gameLogic.CurrentPlayer);
-            CellData actualCellData1 = gameLogic.Board[position1.x, position1.y];
-            CellData actualCellData2 = gameLogic.Board[position2.x, position2.y];
+            CellData expectedCellData = new CellData("S", gameLogic.currentPlayer);
+            CellData actualCellData1 = gameLogic.board[position1.x, position1.y];
+            CellData actualCellData2 = gameLogic.board[position2.x, position2.y];
             string expectedPlayer = "BLUE";
-            string actualPlayer = gameLogic.CurrentPlayer;
+            string actualPlayer = gameLogic.currentPlayer;
 
 
             Assert.AreNotEqual(expectedCellData, actualCellData1);
@@ -186,14 +186,14 @@ namespace GameLogicTests
             Position position1 = new Position(1, 1);
             Position position2 = new Position(2, 1);
 
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position2);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position1);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position2);
 
-            CellData expectedCellData = new CellData("O", gameLogic.CurrentPlayer);
-            CellData actualCellData1 = gameLogic.Board[position1.x, position1.y];
-            CellData actualCellData2 = gameLogic.Board[position2.x, position2.y];
+            CellData expectedCellData = new CellData("O", gameLogic.currentPlayer);
+            CellData actualCellData1 = gameLogic.board[position1.x, position1.y];
+            CellData actualCellData2 = gameLogic.board[position2.x, position2.y];
             string expectedPlayer = "BLUE";
-            string actualPlayer = gameLogic.CurrentPlayer;
+            string actualPlayer = gameLogic.currentPlayer;
 
             Assert.AreNotEqual(expectedCellData, actualCellData1);
             Assert.AreNotEqual(expectedCellData, actualCellData2);
@@ -208,13 +208,13 @@ namespace GameLogicTests
 
             Position position1 = new Position(0, 2);
 
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position1);
 
             bool expectedGameDone = false;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
             string expectedPlayerTurn = "BLUE";
-            string actualPlayerTurn = gameLogic.CurrentPlayer;
-            string actualWinMessage = gameLogic.WinMessage;
+            string actualPlayerTurn = gameLogic.currentPlayer;
+            string actualWinMessage = gameLogic.winMessage;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.AreEqual(expectedPlayerTurn, actualPlayerTurn);
@@ -231,14 +231,14 @@ namespace GameLogicTests
             Position position2 = new Position(1, 2);
             Position position3 = new Position(2, 2);
 
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position3);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position2);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position3);
 
             bool expectedGameDone = true;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
             string expectedWinMessage = "BLUE WINS!";
-            string actualWinMessage = gameLogic.WinMessage;
+            string actualWinMessage = gameLogic.winMessage;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.AreEqual(expectedWinMessage, actualWinMessage);
@@ -252,13 +252,13 @@ namespace GameLogicTests
 
             Position position = new Position(0, 2);
 
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position);
 
             bool expectedGameDone = false;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
             string expectedCurrentPlayer = "RED";
-            string actualCurrentPlayer = gameLogic.CurrentPlayer;
-            string actualWinMessage = gameLogic.WinMessage;
+            string actualCurrentPlayer = gameLogic.currentPlayer;
+            string actualWinMessage = gameLogic.winMessage;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.AreEqual(expectedCurrentPlayer, actualCurrentPlayer);
@@ -274,14 +274,14 @@ namespace GameLogicTests
             Position position2 = new Position(1, 2);
             Position position3 = new Position(2, 2);
 
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position3);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position2);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position3);
 
             bool expectedGameDone = true;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
             string expectedWinMessage = "DRAW";
-            string actualWinMessage = gameLogic.WinMessage;
+            string actualWinMessage = gameLogic.winMessage;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.AreEqual(expectedWinMessage, actualWinMessage);
@@ -294,11 +294,11 @@ namespace GameLogicTests
             gameLogic.computerPlayerMakesMove(gameLogic.bluePlayer);
 
             bool expectedGameDone = false;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
             int expectedBoardCount = 1;
-            int actualBoardCount = gameLogic.BoardCount;
+            int actualBoardCount = gameLogic.boardCount;
             string expectedCurrentPlayer = "RED";
-            string actualCurrentPlayer = gameLogic.CurrentPlayer;
+            string actualCurrentPlayer = gameLogic.currentPlayer;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.AreEqual(expectedBoardCount, actualBoardCount);
@@ -311,15 +311,15 @@ namespace GameLogicTests
             TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, false);
             Position position1 = new Position(0, 2);
 
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position1);
             gameLogic.computerPlayerMakesMove(gameLogic.redPlayer);
 
             bool expectedAttemptedWinMove = false;
             bool actualAttemptedWinMove = gameLogic.winMovePossible;
             bool expectedGameDone = false;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
             string expectedCurrentPlayer = "BLUE";
-            string actualCurrentPlayer = gameLogic.CurrentPlayer;
+            string actualCurrentPlayer = gameLogic.currentPlayer;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.AreEqual(expectedAttemptedWinMove, actualAttemptedWinMove);
@@ -332,15 +332,15 @@ namespace GameLogicTests
             TestingGameLogic gameLogic = new TestingGameLogic(3, "SIMPLE", true, false);
             Position position1 = new Position(1, 1);
 
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position1);
             gameLogic.computerPlayerMakesMove(gameLogic.redPlayer);
 
             bool expectedMadeRandomMove = true;
             bool actualMadeRandomMove = gameLogic.madeRandomMove;
             bool expectedGameDone = false;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
             string expectedCurrentPlayer = "BLUE";
-            string actualCurrentPlayer = gameLogic.CurrentPlayer;
+            string actualCurrentPlayer = gameLogic.currentPlayer;
             bool expectedAttemptedWinMove = false;
             bool actualAttemptedWinMove = gameLogic.winMovePossible;
 
@@ -358,15 +358,15 @@ namespace GameLogicTests
             Position position2 = new Position(2, 1);
             Position position3 = new Position(0,0);
 
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position3);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position2);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position3);
             gameLogic.computerPlayerMakesMove(gameLogic.redPlayer);
 
             bool expectedAttemptedWinMove = true;
             bool actualAttemptedWinMove = gameLogic.winMovePossible;
             bool expectedGameDone = true;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.AreEqual(expectedAttemptedWinMove, actualAttemptedWinMove);
@@ -380,18 +380,18 @@ namespace GameLogicTests
             Position position2 = new Position(2, 1);
             Position position3 = new Position(0, 0);
 
-            gameLogic.makeMove("O", gameLogic.CurrentPlayer, position1);
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position2);
-            gameLogic.makeMove("S", gameLogic.CurrentPlayer, position3);
+            gameLogic.makeMove("O", gameLogic.currentPlayer, position1);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position2);
+            gameLogic.makeMove("S", gameLogic.currentPlayer, position3);
             gameLogic.computerPlayerMakesMove(gameLogic.redPlayer);
 
             bool expectedAttemptedWinMove = true;
             bool actualAttemptedWinMove = gameLogic.winMovePossible;
             bool expectedGameDone = false;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
             int numTurnsPlayedByComputer = gameLogic.numTurns;
             string expectedCurrentPlayer = "BLUE";
-            string actualCurrentPlaeyr = gameLogic.CurrentPlayer;
+            string actualCurrentPlaeyr = gameLogic.currentPlayer;
 
             Assert.AreEqual(expectedAttemptedWinMove, actualAttemptedWinMove);
             Assert.AreEqual(expectedGameDone, actualGameDone);
@@ -406,7 +406,7 @@ namespace GameLogicTests
             gameLogic.automaticSOSTestGame();
 
             bool expectedGameDone = true;
-            bool actualGameDone = gameLogic.GameDone;
+            bool actualGameDone = gameLogic.gameDone;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
         }
@@ -418,7 +418,7 @@ namespace GameLogicTests
             bool expectedGameDone = true;
             bool actualGameDone = true;
             int expectedBoardCount = 9;
-            int actualBoardCount = gameLogic.BoardCount;
+            int actualBoardCount = gameLogic.boardCount;
 
             Assert.AreEqual(expectedGameDone, actualGameDone);
             Assert.AreEqual(expectedBoardCount, actualBoardCount);

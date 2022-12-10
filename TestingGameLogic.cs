@@ -34,9 +34,9 @@ namespace SOS
             {
                 for (int j = 0; j < 2; j++)
                 {
-                    Board[i, j] = cellData[count];
+                    board[i, j] = cellData[count];
                     count++;
-                    BoardCount++;
+                    boardCount++;
                 }
             }
         }
@@ -59,15 +59,15 @@ namespace SOS
                 {
                     if (i == 1 && j == 1)
                     {
-                        Board[i, j] = new CellData("S", "RED");
+                        board[i, j] = new CellData("S", "RED");
                         count++;
-                        BoardCount++;
+                        boardCount++;
                     }
                     else
                     {
-                        Board[i, j] = cellData[count];
+                        board[i, j] = cellData[count];
                         count++;
-                        BoardCount++;
+                        boardCount++;
                     }
                 }
             }
@@ -75,7 +75,7 @@ namespace SOS
 
         public void makeMove(string type, string playerColor, Position position)
         {
-            if (!String.IsNullOrEmpty(Board[position.x, position.y].value))
+            if (!String.IsNullOrEmpty(board[position.x, position.y].value))
                 return;
             else
             {
@@ -84,7 +84,7 @@ namespace SOS
                 List<int> temp = new List<int>();
                 temp = checkForWinOrPoint(cellData, position);
 
-                if (temp.Count > 1 && CurrentGameMode == "GENERAL")
+                if (temp.Count > 1 && currentGameMode == "GENERAL")
                     return;
 
                 SetNextPlayer();
@@ -93,7 +93,7 @@ namespace SOS
 
         public CellData getCellData(Position position)
         {
-            return Board[position.x, position.y];
+            return board[position.x, position.y];
         }
 
         public void computerPlayerMakesMove(Player currentPlayer)
@@ -102,10 +102,10 @@ namespace SOS
             bool validPlacement = false;
             List<int> cases = new List<int>();
             Position winMovePosition = new Position(0, 0);
-            if (BoardCount == 0)
+            if (boardCount == 0)
             { Random random = new Random();
-                int i = random.Next(BoardSize);
-                int j = random.Next(BoardSize);
+                int i = random.Next(boardSize);
+                int j = random.Next(boardSize);
 
                 CellData cellData = new CellData(currentPlayer.placementType, currentPlayer.playerColor);
 
@@ -129,7 +129,7 @@ namespace SOS
                         cases = checkForWinOrPoint(cellData, winMovePosition);
                         winMovePossible = true;
 
-                        if (GameDone)
+                        if (gameDone)
                             return;
                     }
                     else
@@ -138,9 +138,9 @@ namespace SOS
                         Random random = new Random();
                         while (!validPlacement)
                         {
-                            i = random.Next(BoardSize);
-                            j = random.Next(BoardSize);
-                            if (Board[i, j].value != null)
+                            i = random.Next(boardSize);
+                            j = random.Next(boardSize);
+                            if (board[i, j].value != null)
                                 continue;
                             else
                                 validPlacement = true;
@@ -155,10 +155,10 @@ namespace SOS
                         cases = checkForWinOrPoint(cellData, randomPosition);
                         madeRandomMove = true;
 
-                        if (GameDone)
+                        if (gameDone)
                             return;
                     }
-                    if (CurrentGameMode == "SIMPLE" || cases.Count <= 1)
+                    if (currentGameMode == "SIMPLE" || cases.Count <= 1)
                         turnOver = true;
                 }
             }
@@ -166,9 +166,9 @@ namespace SOS
         }
         public void automaticSOSTestGame()
         {
-            while (!GameDone)
+            while (!gameDone)
             {
-                if (CurrentPlayer == "BLUE")
+                if (currentPlayer == "BLUE")
                     computerPlayerMakesMove(bluePlayer);
                 else
                     computerPlayerMakesMove(redPlayer);
